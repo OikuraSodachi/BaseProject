@@ -19,7 +19,9 @@ abstract class BaseActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requestPermissions(permissions,requestCode)
+        if(permissions.isNotEmpty()){
+            requestPermissions(permissions,requestCode)
+        }
         if(backPressedOverride) {
             onBackPressedDispatcher.addCallback {
                 onBackPressedOverride()

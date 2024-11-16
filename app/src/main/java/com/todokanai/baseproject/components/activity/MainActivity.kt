@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.todokanai.baseproject.abstracts.BaseActivity
 import com.todokanai.baseproject.databinding.ActivityMainBinding
+import com.todokanai.baseproject.myobjects.Objects
 import com.todokanai.baseproject.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,11 +17,11 @@ class MainActivity : BaseActivity() {
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private val viewModel : MainViewModel by viewModels()
     override val permissions: Array<String>
-        get() = TODO("Not yet implemented")
+        get() = Objects.permissions
     override val requestCode: Int
-        get() = TODO("Not yet implemented")
+        get() = 111
     override val backPressedOverride: Boolean
-        get() = TODO("Not yet implemented")
+        get() = true
 
     override fun onBackPressedOverride() {
         TODO("Not yet implemented")

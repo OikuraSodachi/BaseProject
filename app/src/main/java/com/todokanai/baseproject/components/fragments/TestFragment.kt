@@ -20,7 +20,6 @@ class TestFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.initVariables()
 
         // val context = requireContext()
         // val activity = requireActivity()
