@@ -1,41 +1,35 @@
 package com.todokanai.baseproject.abstracts
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
-import com.todokanai.baseproject.interfaces.MultiSelectInterface
 import kotlinx.coroutines.flow.Flow
 
 abstract class MultiSelectRecyclerAdapter<E:Any>(
-    itemFlow: Flow<List<E>>
-):BaseRecyclerAdapter<E>(itemFlow),MultiSelectInterface {
+    itemFlow: Flow<List<E>>,
+    private val lifecycleOwner: LifecycleOwner
+):BaseRecyclerAdapter<E>(itemFlow,lifecycleOwner) {
 
-    private var selectedArray = emptyArray<Any>()
-    abstract val longClickEnabled : MutableLiveData<Boolean>
-    abstract val observer: Observer<Boolean>
+    abstract val mode:MutableLiveData<Int>
+    private var selectedSet = emptySet<E>()
 
-    override fun <E : Any> toggleToSelected(selectedItem: E) {
-        if(selectedArray.contains(selectedItem)){
-            selectedArray = selectedArray.toList().minus(selectedItem).toTypedArray()
+    fun getSelected():Set<E>{
+        return selectedSet
+    }
+
+    fun toggleToSelected(selectedItem: E) {
+        if(selectedSet.contains(selectedItem)){
+            selectedSet = selectedSet.minus(selectedItem)
         }else{
-            selectedArray = selectedArray.plus(selectedItem)
+            selectedSet = selectedSet.plus(selectedItem)
         }
     }
 
-    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        super.onAttachedToRecyclerView(recyclerView)
-        longClickEnabled.observeForever(observer)
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        longClickEnabled.removeObserver(observer)
-    }
-
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
-        val item = itemList[position]
+        super.onBindViewHolder(holder, position)
         holder.run{
-            onInit(item)
+            mode.observe(lifecycleOwner){
+
+            }
         }
     }
 }

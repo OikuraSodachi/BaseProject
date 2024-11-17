@@ -2,6 +2,7 @@ package com.todokanai.baseproject.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import com.todokanai.baseproject.R
 import com.todokanai.baseproject.abstracts.BaseRecyclerAdapter
 import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
@@ -18,9 +19,10 @@ import kotlinx.coroutines.flow.Flow
 
 class TestRecyclerAdapter (
     itemFlow: Flow<List<TestHolderItem>>,
+    lifecycleOwner: LifecycleOwner,
     private val onItemClick:(TestHolderItem)->Unit,
     private val onItemLongClick:(TestHolderItem)->Unit
-):BaseRecyclerAdapter<TestHolderItem>(itemFlow){
+):BaseRecyclerAdapter<TestHolderItem>(itemFlow,lifecycleOwner){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.test_recycler,parent,false)
@@ -30,7 +32,6 @@ class TestRecyclerAdapter (
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder<TestHolderItem>, position: Int) {
         val item = itemList[position]
         holder.run{
-            onInit(item)
             itemView.run{
                 setOnClickListener{onItemClick(item)}
                 setOnLongClickListener {

@@ -30,6 +30,7 @@ class TestFragment : BaseFragment() {
     ): View? {
         val testAdapter = TestRecyclerAdapter(
             viewModel.itemFlow,
+            viewLifecycleOwner,
             {viewModel.onItemClick(it)},
             {viewModel.onItemLongClick(it)}
         )
