@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.Flow
 
 /** Handles recyclerView Item update **/
-abstract class BaseRecyclerAdapter<E:Any,VH: RecyclerView.ViewHolder>(
+abstract class BaseRecyclerAdapter<E:Any>(
     itemFlow: Flow<List<E>>,
-): RecyclerView.Adapter<VH>() {
+): RecyclerView.Adapter<BaseRecyclerViewHolder<E>>() {
+
     var itemList = emptyList<E>()
-    private val itemLiveData =itemFlow.asLiveData()
+    private val itemLiveData = itemFlow.asLiveData()
 
     private val observer = Observer<List<E>>{
         itemList = it
