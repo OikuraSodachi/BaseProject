@@ -1,28 +1,27 @@
 package com.todokanai.baseproject.components.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.todokanai.baseproject.abstracts.BaseFragment
 import com.todokanai.baseproject.adapters.TestRecyclerAdapter
 import com.todokanai.baseproject.databinding.FragmentTestBinding
 import com.todokanai.baseproject.viewmodel.TestFragViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TestFragment : Fragment() {
+class TestFragment : BaseFragment() {
 
     private val viewModel:TestFragViewModel by viewModels()
     private val binding by lazy{FragmentTestBinding.inflate(layoutInflater)}
+    override val backPressedOverride: Boolean
+        get() = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // val context = requireContext()
-        // val activity = requireActivity()
+    override fun onBackPressedOverride() {
+        TODO("Not yet implemented")
     }
 
     override fun onCreateView(
@@ -30,6 +29,7 @@ class TestFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val testAdapter = TestRecyclerAdapter(
+            viewModel.itemFlow,
             {viewModel.onItemClick(it)},
             {viewModel.onItemLongClick(it)}
         )
@@ -43,8 +43,6 @@ class TestFragment : Fragment() {
                 swipe.isRefreshing = false
             }
         }
-
         return binding.root
     }
-
 }
