@@ -19,10 +19,9 @@ import kotlinx.coroutines.flow.Flow
 
 class TestRecyclerAdapter (
     itemFlow: Flow<List<TestHolderItem>>,
-    lifecycleOwner: LifecycleOwner,
     private val onItemClick:(TestHolderItem)->Unit,
     private val onItemLongClick:(TestHolderItem)->Unit
-):BaseRecyclerAdapter<TestHolderItem>(itemFlow,lifecycleOwner){
+):BaseRecyclerAdapter<TestHolderItem>(itemFlow){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.test_recycler,parent,false)

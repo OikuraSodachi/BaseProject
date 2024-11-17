@@ -1,24 +1,25 @@
 package com.todokanai.baseproject.abstracts
 
-import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.Flow
 
 /** Handles recyclerView Item update **/
 abstract class BaseRecyclerAdapter<E:Any>(
-    private val itemFlow: Flow<List<E>>,
-    private val lifecycleOwner: LifecycleOwner
+    itemFlow: Flow<List<E>>,
 ): RecyclerView.Adapter<BaseRecyclerViewHolder<E>>() {
 
+    private val itemLiveData = itemFlow.asLiveData()
     var itemList = emptyList<E>()
+    private val observer = Observer<List<E>>{
+        itemList = it
+        notifyDataSetChanged()
+    }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        itemFlow.asLiveData().observe(lifecycleOwner){
-            itemList = it
-            notifyDataSetChanged()
-        }
+        itemLiveData.observeForever(observer)
     }
 
     override fun getItemCount(): Int {
@@ -27,5 +28,10 @@ abstract class BaseRecyclerAdapter<E:Any>(
 
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
         holder.onInit(itemList[position])
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        itemLiveData.removeObserver(observer)
     }
 }

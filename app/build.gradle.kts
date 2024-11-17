@@ -48,6 +48,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
     val composeBom = platform("androidx.compose:compose-bom:2024.06.00")
     val roomVersion = "2.6.1"
     val glideVersion = "4.13.0"
