@@ -10,7 +10,24 @@ import javax.inject.Inject
 @HiltViewModel
 class TestFragViewModel @Inject constructor() : ViewModel() {
 
-    val itemFlow : Flow<List<TestHolderItem>> = flowOf(emptyList<TestHolderItem>())
+    val list : List<TestHolderItem> = listOf(
+        TestHolderItem(null,"stringData",1),
+        TestHolderItem(null,"stringData",2),
+        TestHolderItem(null,"stringData",3),
+        TestHolderItem(null,"stringData",4),
+        TestHolderItem(null,"stringData",5),
+
+        TestHolderItem(null,"stringData",6),
+
+        TestHolderItem(null,"stringData",7),
+
+        TestHolderItem(null,"stringData",8),
+
+
+
+        )
+
+    val itemFlow : Flow<List<TestHolderItem>> = flowOf(list)
 
     fun onItemClick(item:TestHolderItem){
 

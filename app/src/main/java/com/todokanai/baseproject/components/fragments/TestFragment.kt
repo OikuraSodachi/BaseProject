@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.todokanai.baseproject.abstracts.BaseFragment
+import com.todokanai.baseproject.adapters.MultiSelectTestAdapter
 import com.todokanai.baseproject.adapters.TestRecyclerAdapter
 import com.todokanai.baseproject.databinding.FragmentTestBinding
 import com.todokanai.baseproject.viewmodel.TestFragViewModel
@@ -33,9 +34,14 @@ class TestFragment : BaseFragment() {
             {viewModel.onItemClick(it)},
             {viewModel.onItemLongClick(it)}
         )
+
+        val multiTestAdapter = MultiSelectTestAdapter(
+            viewModel.itemFlow
+        )
         binding.run{
             testRecyclerView.run {
-                adapter = testAdapter
+                //adapter = testAdapter
+                adapter = multiTestAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
             swipe.setOnRefreshListener {
