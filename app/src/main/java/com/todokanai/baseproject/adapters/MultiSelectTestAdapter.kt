@@ -1,5 +1,6 @@
 package com.todokanai.baseproject.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.todokanai.baseproject.R
@@ -25,15 +26,23 @@ class MultiSelectTestAdapter(
 
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder<TestHolderItem>, position: Int) {
         super.onBindViewHolder(holder, position)
+
+        val backgroundColor =
+            if (isSelected(position)) {
+                Color.GRAY
+            } else {
+                0
+            }
+
         holder.itemView.run{
             setOnClickListener {
-                toggleSelection(
-                    getItemId(position),
-                    {holder.onSelected()},
-                    {holder.onUnselected()}
-                )
+                toggleSelection(getItemId(position))
             }
+            setBackgroundColor(backgroundColor)
         }
     }
 
+    override fun selectionEnabled(): Boolean {
+        return true
+    }
 }

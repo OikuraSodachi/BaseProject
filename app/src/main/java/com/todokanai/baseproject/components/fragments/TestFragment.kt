@@ -37,16 +37,28 @@ class TestFragment : BaseFragment() {
 
         val multiTestAdapter = MultiSelectTestAdapter(
             viewModel.itemFlow
-        )
+        ).apply {
+            setHasStableIds(true)
+        }
         binding.run{
             testRecyclerView.run {
                 //adapter = testAdapter
                 adapter = multiTestAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
-            swipe.setOnRefreshListener {
-                // refresh item list here
-                swipe.isRefreshing = false
+
+            swipe.run{
+                setOnRefreshListener {
+                    // refresh item list here
+                    swipe.isRefreshing = false
+                }
+                viewTreeObserver.addOnScrollChangedListener() {
+                    if(true) {
+                        isEnabled = false
+                    }else{
+                        isEnabled = true
+                    }
+                }
             }
         }
         return binding.root

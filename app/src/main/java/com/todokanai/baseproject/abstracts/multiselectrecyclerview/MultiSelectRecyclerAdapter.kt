@@ -4,7 +4,6 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
 import com.todokanai.baseproject.abstracts.BaseRecyclerAdapter
-import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
 import kotlinx.coroutines.flow.Flow
 
 abstract class MultiSelectRecyclerAdapter<E:Any>(
@@ -14,25 +13,14 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
     abstract val selectionId:String
     private lateinit var selectionTracker: SelectionTracker<Long>
 
-    // custom variable
-   // abstract val mode:MutableLiveData<Int>
-    //
+    var selectedItems:Set<E> = emptySet()
 
-    fun toggleSelection(
-        itemId:Long,
-        onSelected:()->Unit,
-        onUnselected:()->Unit
-    ){
+    fun toggleSelection(itemId:Long){
         /// val test = selectionTracker.hasSelection()    //  값이  false로 뜨고있음. 여기부터 해결할 것.
-        if(selectionTracker.selection.contains(itemId)) {
+        if (selectionTracker.selection.contains(itemId)) {
             selectionTracker.deselect(itemId)
-            println("selection: ${selectionTracker.selection.size()}")
-            onUnselected()
-        }else{
+        } else {
             selectionTracker.select(itemId)
-            println("selection: ${selectionTracker.selection.size()}")
-
-            onSelected()
         }
     }
 
@@ -50,27 +38,23 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
             .build()
 
         selectionTracker.addObserver(
-            BaseSelectionObserver<E>()
+            BaseSelectionObserver<E>(
+                callback = {
+                    println("${it}")
+                    selectedItems = it.toSet()
+                           },
+                selectionTracker = selectionTracker,
+                itemList = {itemList}
+            )
         )
-     //   mode.observeForever(observer)
     }
 
     override fun getItemId(position: Int):Long{
         return position.toLong()
     }
 
-    override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
-        super.onBindViewHolder(holder, position)
-        if(isSelected(position)){
-            holder.onSelected()
-        }else{
-            holder.onUnselected()
-        }
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-       // mode.removeObserver(observer)
+    fun isSelected(position:Int):Boolean{
+        return selectionTracker.selection.contains(position.toLong())
     }
 
     fun getSelected():Set<E>{
@@ -79,8 +63,5 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
         }.toSet()
         return out
     }
-
-    fun isSelected(itemPosition:Int):Boolean{
-        return selectionTracker.selection.contains(itemPosition.toLong())
-    }
+    abstract fun selectionEnabled():Boolean
 }

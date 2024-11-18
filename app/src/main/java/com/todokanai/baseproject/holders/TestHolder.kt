@@ -1,6 +1,5 @@
 package com.todokanai.baseproject.holders
 
-import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,18 +14,23 @@ class TestHolder(itemView:View): BaseRecyclerViewHolder<TestHolderItem>(itemView
     private val intText = itemView.findViewById<TextView>(R.id.intText)
 
     override fun onInit(item: TestHolderItem) {
-        Glide.with(itemView)
-            .load(item.imageUri)
-            .into(testImage)
+        item.imageUri?.let {
+            Glide.with(itemView)
+                .load(it)
+                .into(testImage)
+        }
         stringText.text = item.stringData
         intText.text = item.intData.toString()
     }
 
-    override fun onSelected(){
-        itemView.setBackgroundColor(Color.RED)
+    /*
+    override fun onTest(selected:Boolean){
+        if(selected){
+            itemView.setBackgroundColor(0)
+        } else{
+            itemView.setBackgroundColor(Color.RED)
+        }
     }
 
-    override fun onUnselected(){
-        itemView.setBackgroundColor(0)
-    }
+     */
 }
