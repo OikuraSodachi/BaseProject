@@ -13,10 +13,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
     abstract val selectionId:String
     private lateinit var selectionTracker: SelectionTracker<Long>
 
-    var selectedItems:Set<E> = emptySet()
-
     fun toggleSelection(itemId:Long){
-        /// val test = selectionTracker.hasSelection()    //  값이  false로 뜨고있음. 여기부터 해결할 것.
         if (selectionTracker.selection.contains(itemId)) {
             selectionTracker.deselect(itemId)
         } else {
@@ -39,10 +36,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
 
         selectionTracker.addObserver(
             BaseSelectionObserver<E>(
-                callback = {
-                    println("${it}")
-                    selectedItems = it.toSet()
-                           },
+                callback = { observerCallback(it) },
                 selectionTracker = selectionTracker,
                 itemList = {itemList}
             )
@@ -57,11 +51,16 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
         return selectionTracker.selection.contains(position.toLong())
     }
 
-    fun getSelected():Set<E>{
+    /** 선택된 Item 목록 **/
+    open fun getSelectedItems():Set<E>{
         val out = selectionTracker.selection.map{
             itemList[it.toInt()]
         }.toSet()
         return out
     }
+
+    abstract fun observerCallback(selectedItems:List<E>)
+
+    /** selection 활성화 여부 **/
     abstract fun selectionEnabled():Boolean
 }

@@ -42,7 +42,15 @@ class MultiSelectTestAdapter(
         }
     }
 
+    override fun getSelectedItems(): Set<TestHolderItem> {
+        return super.getSelectedItems()
+    }
+
     override fun selectionEnabled(): Boolean {
         return true
+    }
+
+    override fun observerCallback(selectedItems: List<TestHolderItem>) {
+        println("${selectedItems.map{it.intData}}")
     }
 }
