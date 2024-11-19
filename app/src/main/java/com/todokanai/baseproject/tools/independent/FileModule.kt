@@ -34,8 +34,7 @@ class FileModule(defaultPath: File) {
     val listFiles = combine(
         currentPath,
         updaterFlow
-    ){
-            path,updater ->
+    ){ path,updater ->
         path.listFiles() ?: emptyArray()
     }
 
