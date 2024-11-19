@@ -26,31 +26,18 @@ class MultiSelectTestAdapter(
 
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder<TestHolderItem>, position: Int) {
         super.onBindViewHolder(holder, position)
-
-        val backgroundColor =
-            if (isSelected(position)) {
-                Color.GRAY
-            } else {
-                0
-            }
-
         holder.itemView.run{
             setOnClickListener {
                 toggleSelection(getItemId(position))
             }
-            setBackgroundColor(backgroundColor)
         }
     }
 
-    override fun getSelectedItems(): Set<TestHolderItem> {
-        return super.getSelectedItems()
-    }
-
-    override fun selectionEnabled(): Boolean {
-        return true
-    }
-
-    override fun observerCallback(selectedItems: List<TestHolderItem>) {
-        println("${selectedItems.map{it.intData}}")
+    override fun selectedHolderUI(holder: BaseRecyclerViewHolder<TestHolderItem>,isSelected:Boolean) {
+        if(isSelected){
+            holder.itemView.setBackgroundColor(Color.GRAY)
+        } else{
+            holder.itemView.setBackgroundColor(0)
+        }
     }
 }

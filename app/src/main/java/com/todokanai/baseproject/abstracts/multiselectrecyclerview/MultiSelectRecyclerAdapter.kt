@@ -4,6 +4,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
 import com.todokanai.baseproject.abstracts.BaseRecyclerAdapter
+import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
 import kotlinx.coroutines.flow.Flow
 
 abstract class MultiSelectRecyclerAdapter<E:Any>(
@@ -13,6 +14,10 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
     abstract val selectionId:String
     private lateinit var selectionTracker: SelectionTracker<Long>
 
+    /** instance of selected items **/
+    var selectedItems = emptySet<E>()
+
+    /** select / deSelect Item **/
     fun toggleSelection(itemId:Long){
         if (selectionTracker.selection.contains(itemId)) {
             selectionTracker.deselect(itemId)
@@ -47,20 +52,23 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
         return position.toLong()
     }
 
+    override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
+        super.onBindViewHolder(holder, position)
+        selectedHolderUI(holder,isSelected(position))
+    }
+
+    /** whether if item( itemList[position] )  is selected **/
     fun isSelected(position:Int):Boolean{
         return selectionTracker.selection.contains(position.toLong())
     }
 
-    /** 선택된 Item 목록 **/
-    open fun getSelectedItems():Set<E>{
-        val out = selectionTracker.selection.map{
-            itemList[it.toInt()]
-        }.toSet()
-        return out
+    /** SelectionObserver callback
+     *
+     * also, setter for selectedItems
+     * **/
+    open fun observerCallback(items:List<E>){
+        this.selectedItems = items.toSet()
     }
 
-    abstract fun observerCallback(selectedItems:List<E>)
-
-    /** selection 활성화 여부 **/
-    abstract fun selectionEnabled():Boolean
+    abstract fun selectedHolderUI(holder: BaseRecyclerViewHolder<E>,isSelected:Boolean)
 }

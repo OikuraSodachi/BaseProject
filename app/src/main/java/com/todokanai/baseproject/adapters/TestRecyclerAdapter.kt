@@ -2,7 +2,6 @@ package com.todokanai.baseproject.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
 import com.todokanai.baseproject.R
 import com.todokanai.baseproject.abstracts.BaseRecyclerAdapter
 import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
