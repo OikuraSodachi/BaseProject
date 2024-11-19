@@ -40,10 +40,8 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
             .build()
 
         selectionTracker.addObserver(
-            BaseSelectionObserver<E>(
-                callback = { observerCallback(it) },
-                selectionTracker = selectionTracker,
-                itemList = {itemList}
+            BaseSelectionObserver(
+                callback = { observerCallback(itemList) }
             )
         )
     }
@@ -67,8 +65,9 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
      * also, setter for selectedItems
      * **/
     open fun observerCallback(items:List<E>){
-        this.selectedItems = items.toSet()
+        selectedItems = selectionTracker.selection.map{itemList[it.toInt()]}.toSet()
     }
 
+    /** 선택된 holder에 대한 처리 **/
     abstract fun selectedHolderUI(holder: BaseRecyclerViewHolder<E>,isSelected:Boolean)
 }

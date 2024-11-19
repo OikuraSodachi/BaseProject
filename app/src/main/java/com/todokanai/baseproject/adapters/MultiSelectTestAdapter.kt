@@ -10,6 +10,7 @@ import com.todokanai.baseproject.data.dataclass.TestHolderItem
 import com.todokanai.baseproject.holders.TestHolder
 import kotlinx.coroutines.flow.Flow
 
+/** example of MultiSelectRecyclerAdapter instance **/
 class MultiSelectTestAdapter(
     itemFlow: Flow<List<TestHolderItem>>,
 ):MultiSelectRecyclerAdapter<TestHolderItem>(itemFlow) {
