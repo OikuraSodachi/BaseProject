@@ -5,7 +5,11 @@ import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.flow.Flow
 
-/** Handles recyclerView Item update **/
+/** Base class of [RecyclerView.Adapter]
+ *
+ * Automatically handles recyclerView Item update
+ *  @param itemFlow [Flow] of itemList
+ *  **/
 abstract class BaseRecyclerAdapter<E:Any>(
     itemFlow: Flow<List<E>>,
 ): RecyclerView.Adapter<BaseRecyclerViewHolder<E>>() {

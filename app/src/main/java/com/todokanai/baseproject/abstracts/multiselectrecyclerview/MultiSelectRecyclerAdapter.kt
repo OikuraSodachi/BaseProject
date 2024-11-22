@@ -7,6 +7,9 @@ import com.todokanai.baseproject.abstracts.BaseRecyclerAdapter
 import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
 import kotlinx.coroutines.flow.Flow
 
+/** [BaseRecyclerAdapter] with multi-selection feature
+ * @param itemFlow [Flow] of recyclerview items
+ * **/
 abstract class MultiSelectRecyclerAdapter<E:Any>(
     itemFlow: Flow<List<E>>,
 ): BaseRecyclerAdapter<E>(itemFlow) {

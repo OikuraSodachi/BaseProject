@@ -39,7 +39,10 @@ fun readableFileSize_td(size: Long): String {
 
 /** Todokanai
  *
- * files:Array <<File>> 과 하위 경로의 파일의 크기 합 */
+ * get the total size of [files]:Array<[File]> and its subdirectories
+ * @param files Array of [File]
+ * @return the total size
+ * */
 fun getTotalSize_td(files: Array<File>): Long {
     var totalSize: Long = 0
     for (file in files) {
@@ -115,7 +118,8 @@ fun sortedFileList_td(
 
 /** Todokanai
  *
- * Directory의 갯수는 포함이 되지 않음 */
+ * @return the number of [File] on [files] and its subdirectories. Does NOT Include directories
+ * **/
 fun getFileNumber_td(files:Array<File>):Int{
     var total = 0
     for (file in files) {
@@ -128,7 +132,9 @@ fun getFileNumber_td(files:Array<File>):Int{
     return total
 }
 /** Todokanai
- *
+ * get the total number of files on [files] and its subdirectories
+ * @param files Array of [File]
+ * @return the total number
  * Directory와 File의 총 갯수*/
 fun getFileAndFoldersNumber_td(files:Array<File>):Int{
     var total = 0
@@ -144,28 +150,14 @@ fun getFileAndFoldersNumber_td(files:Array<File>):Int{
 }
 
 /** Todokanai
- *
- *  file의 하위 파일/폴더들을 반환
- *
- *  권한 문제 / IOException 발생시에는 로그찍고나서 emptyArray 반환
- */
-fun getFileArray_td(file:File):Array<File>{
-    val listFiles = file.listFiles()
-    if(listFiles==null){
-        println("${file.name}.listFiles() returned null")
-        return emptyArray()
-    }else{
-        return listFiles
-    }
-}
-
-/** Todokanai */
+ * @return a fileTree from [currentPath]
+ * */
 fun dirTree_td(currentPath:File): List<File> {
     val result = mutableListOf<File>()
     var now = currentPath
-    while (now.parent != null) {
+    while (now.parentFile != null) {
         result.add(now)
-        now = now.parentFile
+        now = now.parentFile!!
     }
     return result.reversed()
 }

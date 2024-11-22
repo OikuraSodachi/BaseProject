@@ -30,10 +30,9 @@ import java.text.SimpleDateFormat
 import kotlin.system.exitProcess
 
 /** Todokanai
- *
- * Application 종료 method
- *
- * Service가 실행중일 경우 서비스를 실행한 Intent도 입력할것
+ * Application Shutdown method
+ * @param activity [Activity] to finish
+ * @param serviceIntent [Intent] that starts service
  */
 fun exit_td(activity: Activity, serviceIntent: Intent? = null){
     ActivityCompat.finishAffinity(activity)
@@ -138,7 +137,9 @@ fun ToastShort_td(appContext: Context, text:String){
 
 /** Todokanai
  *
- * 기기의 storage 목록 반환 **/
+ * @param context a [Context] instance
+ * @return list of physical storages available
+ * **/
 fun getPhysicalStorages_td(context: Context):List<File>{
     val defaultStorage = Environment.getExternalStorageDirectory()
     val volumes = context.getSystemService(StorageManager::class.java)?.storageVolumes
