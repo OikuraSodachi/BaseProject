@@ -1,6 +1,7 @@
 package com.todokanai.baseproject.components.activity
 
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
@@ -20,12 +21,6 @@ class MainActivity : BaseActivity() {
         get() = Objects.permissions
     override val requestCode: Int
         get() = 111
-    override val backPressedOverride: Boolean
-        get() = true
-
-    override fun onBackPressedOverride() {
-        TODO("Not yet implemented")
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +39,10 @@ class MainActivity : BaseActivity() {
                     }
                 }
             }
+        }
+        onBackPressedDispatcher.addCallback {
 
         }
-
         setContentView(binding.root)
     }
 }
