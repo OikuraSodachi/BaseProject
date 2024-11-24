@@ -8,6 +8,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 abstract class BaseActivity: AppCompatActivity() {
 
+    /** Todo: 이거 viewModel로 가야할듯? **/
     abstract val permissions:Array<String>
     abstract val requestCode:Int
 
