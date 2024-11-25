@@ -14,6 +14,9 @@ import kotlinx.coroutines.flow.Flow
 class MultiSelectTestAdapter(
     itemFlow: Flow<List<TestHolderItem>>,
 ):MultiSelectRecyclerAdapter<TestHolderItem>(itemFlow) {
+
+    override var isSelectionEnabled: Boolean = true
+
     override val selectionId: String
         get() = "selectionId"
 

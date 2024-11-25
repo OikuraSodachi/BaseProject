@@ -11,9 +11,11 @@ import kotlinx.coroutines.flow.Flow
  * @param itemFlow [Flow] of recyclerview items
  * **/
 abstract class MultiSelectRecyclerAdapter<E:Any>(
-    itemFlow: Flow<List<E>>,
+    itemFlow: Flow<List<E>>
 ): BaseRecyclerAdapter<E>(itemFlow) {
 
+    /** selection 기능 활성화 여부 **/
+    abstract var isSelectionEnabled :Boolean
     abstract val selectionId:String
     private lateinit var selectionTracker: SelectionTracker<Long>
 
@@ -22,10 +24,12 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
 
     /** select / deSelect Item **/
     fun toggleSelection(itemId:Long){
-        if (selectionTracker.selection.contains(itemId)) {
-            selectionTracker.deselect(itemId)
-        } else {
-            selectionTracker.select(itemId)
+        if(isSelectionEnabled) {
+            if (selectionTracker.selection.contains(itemId)) {
+                selectionTracker.deselect(itemId)
+            } else {
+                selectionTracker.select(itemId)
+            }
         }
     }
 
