@@ -2,8 +2,6 @@ package com.todokanai.baseproject.abstracts
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.todokanai.baseproject.myobjects.Constants.PERMISSION_REQUEST_CODE
-import com.todokanai.baseproject.myobjects.Objects
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -12,8 +10,8 @@ import dagger.hilt.android.AndroidEntryPoint
  * **/
 abstract class BaseActivity: AppCompatActivity() {
 
-    private val permissions:Array<String> = Objects.permissions
-    private val requestCode:Int = PERMISSION_REQUEST_CODE
+    abstract val permissions:Array<String>
+    abstract val requestCode:Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

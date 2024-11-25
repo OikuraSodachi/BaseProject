@@ -8,11 +8,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.todokanai.baseproject.abstracts.BaseActivity
 import com.todokanai.baseproject.databinding.ActivityMainBinding
+import com.todokanai.baseproject.myobjects.Constants.PERMISSION_REQUEST_CODE
+import com.todokanai.baseproject.myobjects.Objects
 import com.todokanai.baseproject.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
+    override val permissions = Objects.permissions
+    override val requestCode = PERMISSION_REQUEST_CODE
 
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private val viewModel : MainViewModel by viewModels()
