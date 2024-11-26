@@ -44,4 +44,9 @@ class MultiSelectTestAdapter(
             holder.itemView.setBackgroundColor(0)
         }
     }
+
+    override fun observerCallback(items: List<TestHolderItem>) {
+        super.observerCallback(items)
+        println("observerCallback: ${selectedItems.map{it.intData}}")
+    }
 }

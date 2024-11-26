@@ -62,7 +62,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
         selectedHolderUI(holder,isSelected(position))
     }
 
-    /** whether if item( itemList[position] )  is selected **/
+    /** whether item( itemList[position] ) is selected **/
     private fun isSelected(position:Int):Boolean{
         return selectionTracker.selection.contains(position.toLong())
     }
@@ -71,8 +71,8 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
      *
      * also, setter for selectedItems
      * **/
-    private fun observerCallback(items:List<E>){
-        selectedItems = selectionTracker.selection.map{items[it.toInt()]}.toSet()
+    open fun observerCallback(items:List<E>){
+        selectedItems = selectionTracker.selection.map{items[it.toInt()]}.toSet() // update selection
     }
 
     /** 선택된 holder에 대한 처리 **/
