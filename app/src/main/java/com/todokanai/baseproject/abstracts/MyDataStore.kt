@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
+/** DataStore 코드 단순화를 위한? class **/
 abstract class MyDataStore(private val appContext: Context) {
     private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "mydatastore")
 
