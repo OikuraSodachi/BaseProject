@@ -15,7 +15,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
 ): BaseRecyclerAdapter<E>(itemFlow) {
 
     /** selection 기능 활성화 여부 **/
-    abstract var isSelectionEnabled :Boolean
+    open var isSelectionEnabled :Boolean = false
     abstract val selectionId:String
     private lateinit var selectionTracker: SelectionTracker<Long>
 
@@ -71,8 +71,8 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
      *
      * also, setter for selectedItems
      * **/
-    open fun observerCallback(items:List<E>){
-        selectedItems = selectionTracker.selection.map{itemList[it.toInt()]}.toSet()
+    private fun observerCallback(items:List<E>){
+        selectedItems = selectionTracker.selection.map{items[it.toInt()]}.toSet()
     }
 
     /** 선택된 holder에 대한 처리 **/
