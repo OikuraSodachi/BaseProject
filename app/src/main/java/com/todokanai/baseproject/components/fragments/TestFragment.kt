@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.todokanai.baseproject.abstracts.AreaSelectAddon
 import com.todokanai.baseproject.adapters.MultiSelectTestAdapter
 import com.todokanai.baseproject.adapters.TestRecyclerAdapter
 import com.todokanai.baseproject.databinding.FragmentTestBinding
@@ -31,11 +32,13 @@ class TestFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
+        val testAddon = AreaSelectAddon(binding.testRecyclerView)
         val testAdapter = TestRecyclerAdapter(
             viewModel.itemFlow,
             {viewModel.onItemClick(it)},
-            //{viewModel.onItemLongClick(it)},
-            longClickListener
+          //  {viewModel.onItemLongClick(it)},
+            //longClickListener
+            testAddon.longClickListener
         )
 
         val multiTestAdapter = MultiSelectTestAdapter(
@@ -66,7 +69,8 @@ class TestFragment : Fragment() {
         }
         if(isTemporaryTest){
            // binding.testRecyclerView.visibility = GONE
-            onTest(binding)
+            //onTest(binding)
+            testAddon.add()
         }
         return binding.root
     }
