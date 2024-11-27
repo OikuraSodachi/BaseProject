@@ -9,14 +9,13 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
+        android:name="com.todokanai.baseproject.components.fragments.TestFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:name="com.todokanai.baseproject.components.fragments.TestFragment"
         tools:layout="@layout/fragment_test" />
 
     <androidx.compose.ui.platform.ComposeView
