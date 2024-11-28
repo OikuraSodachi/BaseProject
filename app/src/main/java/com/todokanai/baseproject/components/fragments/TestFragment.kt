@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.todokanai.baseproject.abstracts.AreaSelectAddon
 import com.todokanai.baseproject.adapters.MultiSelectTestAdapter
 import com.todokanai.baseproject.adapters.TestRecyclerAdapter
 import com.todokanai.baseproject.databinding.FragmentTestBinding
@@ -24,21 +23,10 @@ class TestFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val testAddon = AreaSelectAddon(
-            binding.testRecyclerView,
-            onGetArea = {
-                one,two,three,four ->
-
-                println("tag startX: $one, startY: $two")
-                println("tag endX: $three, endY: $four")
-            }
-        )
-
         val testAdapter = TestRecyclerAdapter(
             viewModel.itemFlow,
             {viewModel.onItemClick(it)},
-           // {viewModel.onItemLongClick(it)},
-            testAddon.longClickListener
+            {viewModel.onItemLongClick(it)},
         )
 
         val multiTestAdapter = MultiSelectTestAdapter(
@@ -51,7 +39,6 @@ class TestFragment : Fragment() {
                 adapter = testAdapter
                // adapter = multiTestAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                testAddon.add()
             }
 
             swipe.run{
