@@ -1,4 +1,4 @@
-package com.todokanai.baseproject.abstracts
+package com.todokanai.baseproject.tools.independent
 
 import android.view.View
 import kotlin.properties.Delegates

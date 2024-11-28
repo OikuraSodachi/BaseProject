@@ -36,8 +36,8 @@ class TestFragment : Fragment() {
         }
         binding.run{
             testRecyclerView.run {
-                adapter = testAdapter
-               // adapter = multiTestAdapter
+               // adapter = testAdapter
+                adapter = multiTestAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
 
