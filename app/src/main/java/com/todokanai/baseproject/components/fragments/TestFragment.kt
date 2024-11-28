@@ -20,24 +20,24 @@ class TestFragment : Fragment() {
     private val viewModel:TestFragViewModel by viewModels()
     private val binding by lazy{FragmentTestBinding.inflate(layoutInflater)}
 
-    /** drag 활성화 여부 **/
-    var enabled:Boolean = false
-    val isTemporaryTest = true
-
-    var isStartReady = false
-    var startX : Float = 0f
-    var startY : Float = 0f
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val testAddon = AreaSelectAddon(binding.testRecyclerView)
+        val testAddon = AreaSelectAddon(
+            binding.testRecyclerView,
+            onGetArea = {
+                one,two,three,four ->
+
+                println("tag startX: $one, startY: $two")
+                println("tag endX: $three, endY: $four")
+            }
+        )
+
         val testAdapter = TestRecyclerAdapter(
             viewModel.itemFlow,
             {viewModel.onItemClick(it)},
-          //  {viewModel.onItemLongClick(it)},
-            //longClickListener
+           // {viewModel.onItemLongClick(it)},
             testAddon.longClickListener
         )
 
@@ -51,6 +51,7 @@ class TestFragment : Fragment() {
                 adapter = testAdapter
                // adapter = multiTestAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                testAddon.add()
             }
 
             swipe.run{
@@ -67,50 +68,6 @@ class TestFragment : Fragment() {
                 }
             }
         }
-        if(isTemporaryTest){
-           // binding.testRecyclerView.visibility = GONE
-            //onTest(binding)
-            testAddon.add()
-        }
         return binding.root
-    }
-
-
-    val longClickListener = View.OnLongClickListener {
-        isStartReady = false
-        it.setOnTouchListener { view, motionEvent ->
-            if(isStartReady == false) {
-                startX = motionEvent.x
-                startY = motionEvent.y
-                println("tag longClick x:${motionEvent.x}, y:${motionEvent.y}")
-                isStartReady = true
-            }
-            false
-        }
-
-        enabled = true
-        false
-    }
-
-    fun onTest(binding: FragmentTestBinding){
-        binding.testRecyclerView.run{
-
-            setOnTouchListener { view, motionEvent ->
-                if( enabled ) {
-                    println("x:${motionEvent.x}, y:${motionEvent.y}, action: ${motionEvent.action}")
-                  //  onMovement(motionEvent.x,motionEvent.y)
-
-                }
-                if(enabled == true && motionEvent.action == 1){
-                  //  wManager.removeView(area)
-
-                    println("tag startX: $startX, startY: $startY")
-                    println("tag endX: ${motionEvent.x}, endY: ${motionEvent.y}")
-
-                    enabled = false
-                }
-                false
-            }
-        }
     }
 }

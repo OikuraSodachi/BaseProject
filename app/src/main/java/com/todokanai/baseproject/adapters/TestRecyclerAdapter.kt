@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.Flow
 class TestRecyclerAdapter (
     itemFlow: Flow<List<TestHolderItem>>,
     private val onItemClick:(TestHolderItem)->Unit,
-   //private val onItemLongClick:(TestHolderItem)->Unit,
+  // private val onItemLongClick:(TestHolderItem)->Unit,
     private val longClickListener: View.OnLongClickListener
 ):BaseRecyclerAdapter<TestHolderItem>(itemFlow){
 
@@ -34,13 +34,13 @@ class TestRecyclerAdapter (
         holder.run{
             itemView.run{
                 setOnClickListener{onItemClick(item)}
-              /*
+                /*
                 setOnLongClickListener {
                     onItemLongClick(item)
                     true
                 }
 
-              */
+         */
                 setOnLongClickListener(longClickListener)
             }
         }

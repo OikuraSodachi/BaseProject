@@ -2,13 +2,20 @@ package com.todokanai.baseproject.abstracts
 
 import android.view.View
 
-class AreaSelectAddon(val view: View) {
+/**
+ * @param view [View] to apply areaSelect feature
+ *
+ * **/
+class AreaSelectAddon(
+    private val view: View,
+    val onGetArea:(Float,Float,Float,Float)->Unit
+) {
     /** drag 활성화 여부 **/
-    var enabled:Boolean = false
+    private var enabled:Boolean = false
 
-    var isStartReady = false
-    var startX : Float = 0f
-    var startY : Float = 0f
+    private var isStartReady = false
+    private var startX : Float = 0f
+    private var startY : Float = 0f
 
     val longClickListener = View.OnLongClickListener {
         isStartReady = false
@@ -16,7 +23,6 @@ class AreaSelectAddon(val view: View) {
             if (isStartReady == false) {
                 startX = motionEvent.x
                 startY = motionEvent.y
-                println("tag longClick x:${motionEvent.x}, y:${motionEvent.y}")
                 isStartReady = true
             }
             false
@@ -26,16 +32,9 @@ class AreaSelectAddon(val view: View) {
     }
 
     val onTouchListener = View.OnTouchListener { view, motionEvent ->
-        if( enabled ) {
-            println("x:${motionEvent.x}, y:${motionEvent.y}, action: ${motionEvent.action}")
-            //  onMovement(motionEvent.x,motionEvent.y)
-
-        }
         if(enabled == true && motionEvent.action == 1){
-            //  wManager.removeView(area)
 
-            println("tag startX: $startX, startY: $startY")
-            println("tag endX: ${motionEvent.x}, endY: ${motionEvent.y}")
+            onGetArea(startX,startY,motionEvent.x,motionEvent.y)
 
             enabled = false
         }
