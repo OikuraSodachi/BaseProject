@@ -3,7 +3,7 @@ package com.todokanai.baseproject.abstracts
 import android.view.View
 import kotlin.properties.Delegates
 
-abstract class BaseAreaAddOn(val v: View) {
+abstract class BaseDragAreaAddOn(val v: View) {
 
     /** drag 활성화 여부 **/
     private var enabled:Boolean = false
@@ -13,8 +13,8 @@ abstract class BaseAreaAddOn(val v: View) {
     private var startX by Delegates.notNull<Float>()
     private var startY by Delegates.notNull<Float>()
 
-    /** starts area selection (drag selection) **/
-    fun startAreaSelection(v: View){
+    /** starts drag area **/
+    fun startDragArea(v: View){
         isStartReady = false
         onStartArea(true)
         /** Todo: RecyclerView 등의 경우, scroll 비활성화를 여기서 해야할듯? **/
@@ -28,7 +28,7 @@ abstract class BaseAreaAddOn(val v: View) {
         }
     }
 
-    /** usage: areaSelection 적용할 view에 setOnTouchListener 등록 **/
+    /** usage: drag area 적용할 view에 setOnTouchListener 등록 **/
     private val onTouchListener = View.OnTouchListener { view, motionEvent ->
         if(enabled == true && motionEvent.action == 1){
             onGetAreaResult(startX,startY,motionEvent.x,motionEvent.y)
@@ -39,7 +39,7 @@ abstract class BaseAreaAddOn(val v: View) {
         false
     }
 
-    /** dragSelect 동작 도중에 **/
+    /** drag area 동작 도중에 **/
     abstract fun onMovement(startX: Float, startY: Float, endX: Float, endY: Float)
 
     /** 시작지점과 끝 지점 좌표 사이의 구간 (Windows의 마우스 클릭-드래그 범위선택에 해당) 를 parameter로서 가져옴 **/
