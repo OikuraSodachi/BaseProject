@@ -23,15 +23,6 @@ class TestFragViewModel @Inject constructor() : ViewModel() {
 
         TestHolderItem(null,"stringData",8),
 
-        TestHolderItem(null,"stringData",9),
-        TestHolderItem(null,"stringData",10),
-        TestHolderItem(null,"stringData",11),
-        TestHolderItem(null,"stringData",12),
-        TestHolderItem(null,"stringData",13),
-        TestHolderItem(null,"stringData",14),
-        TestHolderItem(null,"stringData",15),
-        TestHolderItem(null,"stringData",16),
-        TestHolderItem(null,"stringData",17),
 
 
         )
