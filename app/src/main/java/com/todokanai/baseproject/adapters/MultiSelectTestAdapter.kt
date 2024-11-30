@@ -30,7 +30,9 @@ class MultiSelectTestAdapter(
         super.onBindViewHolder(holder, position)
         holder.itemView.run{
             setOnClickListener {
-                toggleSelection(getItemId(position))
+                if(isSelectionEnabled) {
+                    toggleSelection(position)
+                }
             }
         }
     }
@@ -44,8 +46,8 @@ class MultiSelectTestAdapter(
     }
 
     override fun observerCallback() {
-//        println("observerCallback: ${selectedItems.map{it.intData}}")
-        println("observerCallback: ${selectionTracker.selection.map{it.toInt()}}")
-
+        /** position of item (starts from 0 ) **/
+        val position = selectionTracker.selection.map{it.toInt()}
+        println("observerCallback: $position")
     }
 }

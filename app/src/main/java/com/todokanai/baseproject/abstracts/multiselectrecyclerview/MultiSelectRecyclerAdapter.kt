@@ -9,6 +9,10 @@ import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
 import kotlinx.coroutines.flow.Flow
 
 /** [BaseRecyclerAdapter] with multi-selection feature
+ *
+ * key:Long == position:Int .toLong()
+ *
+ * position:Int == key:Long .toInt()
  * @param itemFlow [Flow] of recyclerview items
  * **/
 abstract class MultiSelectRecyclerAdapter<E:Any>(
@@ -21,13 +25,12 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
     lateinit var selectionTracker: SelectionTracker<Long>
 
     /** select / deSelect Item **/
-    fun toggleSelection(itemId:Long){
-        if(isSelectionEnabled) {
-            if (selectionTracker.selection.contains(itemId)) {
-                selectionTracker.deselect(itemId)
-            } else {
-                selectionTracker.select(itemId)
-            }
+    fun toggleSelection(position: Int){
+        val itemId = getItemId(position)
+        if (selectionTracker.selection.contains(itemId)) {
+            selectionTracker.deselect(itemId)
+        } else {
+            selectionTracker.select(itemId)
         }
     }
 
@@ -57,7 +60,10 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
 
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
         super.onBindViewHolder(holder, position)
-        selectedHolderUI(holder,isSelected(position))
+        selectedHolderUI(
+            holder,
+            selectionTracker.selection.contains(position.toLong())
+        )
     }
 
     /** whether item( itemList[position] ) is selected **/
