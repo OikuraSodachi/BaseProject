@@ -16,9 +16,7 @@ class MultiSelectTestAdapter(
 ):MultiSelectRecyclerAdapter<TestHolderItem>(itemFlow) {
 
     override var isSelectionEnabled = true
-
-    override val selectionId: String
-        get() = "selectionId"
+    override val selectionId = "selectionId"
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -45,8 +43,9 @@ class MultiSelectTestAdapter(
         }
     }
 
-    override fun observerCallback(items: List<TestHolderItem>) {
-        super.observerCallback(items)
-        println("observerCallback: ${selectedItems.map{it.intData}}")
+    override fun observerCallback() {
+//        println("observerCallback: ${selectedItems.map{it.intData}}")
+        println("observerCallback: ${selectionTracker.selection.map{it.toInt()}}")
+
     }
 }

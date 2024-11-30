@@ -1,5 +1,6 @@
 package com.todokanai.baseproject.abstracts.multiselectrecyclerview
 
+import androidx.recyclerview.selection.Selection
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
@@ -17,10 +18,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
     /** selection 기능 활성화 여부 **/
     open var isSelectionEnabled :Boolean = false
     abstract val selectionId:String
-    private lateinit var selectionTracker: SelectionTracker<Long>
-
-    /** instance of selected items **/
-    var selectedItems = emptySet<E>()
+    lateinit var selectionTracker: SelectionTracker<Long>
 
     /** select / deSelect Item **/
     fun toggleSelection(itemId:Long){
@@ -48,7 +46,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
 
         selectionTracker.addObserver(
             BaseSelectionObserver(
-                callback = { observerCallback(itemList) }
+                callback = { observerCallback() }
             )
         )
     }
@@ -71,9 +69,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
      *
      * also, setter for selectedItems
      * **/
-    open fun observerCallback(items:List<E>){
-        selectedItems = selectionTracker.selection.map{items[it.toInt()]}.toSet() // update selection
-    }
+    abstract fun observerCallback()
 
     /** 선택된 holder에 대한 처리 **/
     abstract fun selectedHolderUI(holder: BaseRecyclerViewHolder<E>,isSelected:Boolean)
