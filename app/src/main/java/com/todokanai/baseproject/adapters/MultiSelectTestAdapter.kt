@@ -36,17 +36,6 @@ class MultiSelectTestAdapter(
         }
     }
 
-    /*
-    override fun selectedHolderUI(holder: BaseRecyclerViewHolder<TestHolderItem>,isSelected:Boolean) {
-        if(isSelected){
-            holder.itemView.setBackgroundColor(Color.GRAY)
-        } else{
-            holder.itemView.setBackgroundColor(0)
-        }
-    }
-
-
-     */
     override fun observerCallback() {
         /** position of item (starts from 0 ) **/
         val position = selectionTracker.selection.map{it.toInt()}
