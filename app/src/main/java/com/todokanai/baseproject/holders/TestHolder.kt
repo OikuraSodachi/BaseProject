@@ -1,5 +1,6 @@
 package com.todokanai.baseproject.holders
 
+import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,14 +24,12 @@ class TestHolder(itemView:View): BaseRecyclerViewHolder<TestHolderItem>(itemView
         intText.text = item.intData.toString()
     }
 
-    /*
-    override fun onTest(selected:Boolean){
-        if(selected){
-            itemView.setBackgroundColor(0)
+    override fun onSelectionChanged(isSelected: Boolean) {
+        super.onSelectionChanged(isSelected)
+        if(isSelected){
+            itemView.setBackgroundColor(Color.GRAY)
         } else{
-            itemView.setBackgroundColor(Color.RED)
+            itemView.setBackgroundColor(0)
         }
     }
-
-     */
 }

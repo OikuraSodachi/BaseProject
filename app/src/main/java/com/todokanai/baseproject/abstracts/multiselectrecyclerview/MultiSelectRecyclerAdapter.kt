@@ -1,6 +1,6 @@
 package com.todokanai.baseproject.abstracts.multiselectrecyclerview
 
-import androidx.recyclerview.selection.Selection
+import android.view.MotionEvent
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +29,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
         val itemId = getItemId(position)
         if (selectionTracker.selection.contains(itemId)) {
             selectionTracker.deselect(itemId)
+
         } else {
             selectionTracker.select(itemId)
         }
@@ -36,6 +37,8 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
+        selectionBugFix(recyclerView)
+
         selectionTracker = SelectionTracker.Builder(
             selectionId,
             recyclerView,
@@ -60,10 +63,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
 
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
         super.onBindViewHolder(holder, position)
-        selectedHolderUI(
-            holder,
-            selectionTracker.selection.contains(position.toLong())
-        )
+        holder.onSelectionChanged(isSelected(position))
     }
 
     /** whether item( itemList[position] ) is selected **/
@@ -77,6 +77,23 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
      * **/
     abstract fun observerCallback()
 
-    /** 선택된 holder에 대한 처리 **/
-    abstract fun selectedHolderUI(holder: BaseRecyclerViewHolder<E>,isSelected:Boolean)
+    /** workaround fix for selection being cleared on touching outside
+     *
+     *  https://issuetracker.google.com/issues/177046288#comment7 **/
+    private fun selectionBugFix(recyclerView: RecyclerView){
+        recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
+            override fun onInterceptTouchEvent(rv: RecyclerView, event: MotionEvent): Boolean {
+                val down = event.actionMasked == MotionEvent.ACTION_DOWN
+                if(!down || !selectionTracker.hasSelection()) {
+                    return false //Don't intercept, otherwise you break scrolling
+                }
+
+                val view = recyclerView.findChildViewUnder(event.x, event.y)
+                return view == null
+            }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) { }
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) { }
+        })
+    }
 }
