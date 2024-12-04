@@ -79,7 +79,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
 
     /** workaround fix for selection being cleared on touching outside
      *
-     *  https://issuetracker.google.com/issues/177046288#comment7 **/
+     * [issue tracker](https://issuetracker.google.com/issues/177046288#comment7) **/
     private fun selectionBugFix(recyclerView: RecyclerView){
         recyclerView.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onInterceptTouchEvent(rv: RecyclerView, event: MotionEvent): Boolean {
