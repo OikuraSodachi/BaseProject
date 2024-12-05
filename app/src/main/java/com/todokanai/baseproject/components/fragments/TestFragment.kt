@@ -51,17 +51,17 @@ class TestFragment : Fragment() {
                     swipe.isRefreshing = false
                 }
                 viewTreeObserver.addOnScrollChangedListener() {
-                    if(true) {
-                        isEnabled = false
+                    if(false) {
+                        isEnabled = false       // disable swipe
                     }else{
-                        isEnabled = true
+                        isEnabled = true        // enable swipe
                     }
                 }
             }
         }
 
         isBottomButtonsEnabled.observe(viewLifecycleOwner){
-            binding.bottomBtns.visibility = if(true){
+            binding.bottomBtns.visibility = if(it){
                 VISIBLE
             }else{
                 GONE
