@@ -14,7 +14,6 @@ class MultiSelectTestAdapter(
     itemFlow: Flow<List<TestHolderItem>>,
 ):MultiSelectRecyclerAdapter<TestHolderItem>(itemFlow) {
 
-    override var isSelectionEnabled = true
     override val selectionId = "selectionId"
 
     override fun onCreateViewHolder(
@@ -29,8 +28,8 @@ class MultiSelectTestAdapter(
         super.onBindViewHolder(holder, position)
         holder.itemView.run{
             setOnClickListener {
-                if(isSelectionEnabled) {
-                    toggleSelection(position)
+                if(isSelectionEnabled()) {
+                    updateToSelection(position)
                 }
             }
         }
