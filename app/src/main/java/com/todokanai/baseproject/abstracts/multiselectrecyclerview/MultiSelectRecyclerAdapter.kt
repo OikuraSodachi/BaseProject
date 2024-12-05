@@ -77,6 +77,14 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
      * **/
     abstract fun observerCallback()
 
+    /** returns the [Set] of selected Items **/
+    fun selectedItems(): Set<E>{
+        val out = selectionTracker.selection.map{
+            itemList[it.toInt()]
+        }.toSet()
+        return out
+    }
+
     /** workaround fix for selection being cleared on touching outside
      *
      * [issue tracker](https://issuetracker.google.com/issues/177046288#comment7) **/

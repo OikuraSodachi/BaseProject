@@ -3,25 +3,24 @@ package com.todokanai.baseproject.components.fragments
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.todokanai.baseproject.adapters.MultiSelectTestAdapter
 import com.todokanai.baseproject.adapters.TestRecyclerAdapter
 import com.todokanai.baseproject.databinding.FragmentTestBinding
 import com.todokanai.baseproject.viewmodel.TestFragViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @AndroidEntryPoint
 class TestFragment : Fragment() {
 
     private val viewModel:TestFragViewModel by viewModels()
     private val binding by lazy{FragmentTestBinding.inflate(layoutInflater)}
-    private val isBottomButtonsEnabled = MutableLiveData<Boolean>(false)
+    private val isSwipeEnabled = MutableStateFlow<Boolean>(true)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,22 +50,11 @@ class TestFragment : Fragment() {
                     swipe.isRefreshing = false
                 }
                 viewTreeObserver.addOnScrollChangedListener() {
-                    if(false) {
-                        isEnabled = false       // disable swipe
-                    }else{
-                        isEnabled = true        // enable swipe
+                    isSwipeEnabled.asLiveData().observe(viewLifecycleOwner){
+                        isEnabled = it      // enable/disable swipe
                     }
                 }
             }
-        }
-
-        isBottomButtonsEnabled.observe(viewLifecycleOwner){
-            binding.bottomBtns.visibility = if(it){
-                VISIBLE
-            }else{
-                GONE
-            }
-
         }
         return binding.root
     }
