@@ -200,7 +200,6 @@ fun openFile_td(
     }
 }
 
-
 /** Todokanai
  *
  *  itemList: List of Pair<( ItemTitle ),( Callback ) >
@@ -209,8 +208,8 @@ fun openFile_td(
 fun popupMenu_td(
     context: Context,
     anchor:View,
-    gravity:Int = 0,  // == Gravity.NO_GRAVITY
-    itemList:List<Pair<String,()->Unit>>
+    itemList:List<Pair<String,()->Unit>>,
+    gravity:Int = 0  // == Gravity.NO_GRAVITY
 ){
     val popupMenu = PopupMenu(context,anchor,gravity)
     popupMenu.run {
