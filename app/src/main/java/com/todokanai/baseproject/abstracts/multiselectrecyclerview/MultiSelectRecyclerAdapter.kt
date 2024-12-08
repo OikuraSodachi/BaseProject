@@ -6,6 +6,7 @@ import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
 import com.todokanai.baseproject.abstracts.BaseRecyclerAdapter
 import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
+import com.todokanai.baseproject.tools.independent.OverridableVariable
 import kotlinx.coroutines.flow.Flow
 
 /** [BaseRecyclerAdapter] with multi-selection feature
@@ -20,17 +21,19 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
 ): BaseRecyclerAdapter<E>(itemFlow) {
 
     /** selection 기능 활성화 여부 **/
-    private var isSelectionEnabled :Boolean = false
+    var isSelectionEnabled= OverridableVariable<Boolean>(
+        initialValue = false,
+        additionalSetter = {}
+    )
+
     abstract val selectionId:String
     lateinit var selectionTracker: SelectionTracker<Long>
-
-    fun isSelectionEnabled() = isSelectionEnabled
 
     open fun toggleSelection(enabled:Boolean){
         if(!enabled){
             selectionTracker.clearSelection()
         }
-        isSelectionEnabled = enabled
+        isSelectionEnabled.value = enabled
     }
 
     /** select / deSelect Item **/
