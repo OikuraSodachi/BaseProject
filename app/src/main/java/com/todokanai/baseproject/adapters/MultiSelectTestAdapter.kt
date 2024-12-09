@@ -28,7 +28,7 @@ class MultiSelectTestAdapter(
         super.onBindViewHolder(holder, position)
         holder.itemView.run{
             setOnClickListener {
-                if(isSelectionEnabled.value) {
+                if(isSelectionEnabled) {
                     updateToSelection(position)
                 }
             }
