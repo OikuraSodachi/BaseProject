@@ -71,7 +71,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
         return selectionTracker.selection.contains(position.toLong())
     }
 
-    /** SelectionObserver callback **/
+    /** additional SelectionObserver callback **/
     open fun observerCallback(){
 
     }
