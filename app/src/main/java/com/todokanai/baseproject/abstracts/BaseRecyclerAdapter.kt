@@ -1,5 +1,6 @@
 package com.todokanai.baseproject.abstracts
 
+import androidx.annotation.CallSuper
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -21,6 +22,7 @@ abstract class BaseRecyclerAdapter<E:Any>(
         notifyDataSetChanged()
     }
 
+    @CallSuper
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         itemLiveData.observeForever(observer)
@@ -34,6 +36,7 @@ abstract class BaseRecyclerAdapter<E:Any>(
         holder.onInit(itemList[position])
     }
 
+    @CallSuper
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
         itemLiveData.removeObserver(observer)

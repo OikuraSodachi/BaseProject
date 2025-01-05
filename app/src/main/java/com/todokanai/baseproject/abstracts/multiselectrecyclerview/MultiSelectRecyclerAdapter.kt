@@ -1,6 +1,7 @@
 package com.todokanai.baseproject.abstracts.multiselectrecyclerview
 
 import android.view.MotionEvent
+import androidx.annotation.CallSuper
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
             selectionEnabledInstance = enabled
         }
 
+    @CallSuper
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         selectionBugFix(recyclerView)
@@ -58,6 +60,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
         return position.toLong()
     }
 
+    @CallSuper
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
         super.onBindViewHolder(holder, position)
         onSelectionChanged(holder,isSelected(position))   //holder의 selected 여부 변경시 처리
