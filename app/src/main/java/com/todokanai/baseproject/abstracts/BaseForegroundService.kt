@@ -22,7 +22,6 @@ abstract class BaseForegroundService: Service() {
     private val binder = Binder()
     val notificationManager by lazy{ NotificationManagerCompat.from(this)}
     abstract val notificationChannel: NotificationChannel
-
     private val serviceCoroutineContext: CoroutineContext = Dispatchers.Default
 
     /** [BaseForegroundService]가 존재하는 동안 유지되는 CoroutineScope
