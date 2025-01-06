@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "BaseProject"
 include(":app")
-include(":basemodule")
+ 
