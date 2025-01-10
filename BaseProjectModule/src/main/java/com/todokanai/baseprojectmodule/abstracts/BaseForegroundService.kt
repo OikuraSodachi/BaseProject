@@ -1,4 +1,4 @@
-package com.todokanai.baseproject.abstracts
+package com.todokanai.baseprojectmodule.abstracts
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -49,33 +49,21 @@ abstract class BaseForegroundService: Service() {
         serviceScope.cancel()
     }
 
-    /** notification for the foregroundservice **/
-    abstract fun foregroundNotification(
-        context: Context = this,
-        channelId:String = notificationChannel.id
-    ): Notification
+    abstract fun generateNotification(context: Context): Notification
 
-    open fun onPostNotification(
-        context: Context = this,
-        notificationManager:NotificationManagerCompat = this.notificationManager,
-        id:Int = 1
-    ){
-        notificationManager.notify(id,foregroundNotification(context))
+    open fun onPostNotification(notificationManager:NotificationManagerCompat = this@BaseForegroundService.notificationManager){
+        notificationManager.notify(1,generateNotification(this@BaseForegroundService))
     }
 
-    open fun onCreateNotificationChannel(
-        service: Service = this,
-        notificationManager:NotificationManagerCompat = this.notificationManager,
-        id:Int = 1,
-        notification:Notification = foregroundNotification(this),
-        type:Int =
+    open fun onCreateNotificationChannel(notificationManager:NotificationManagerCompat = this@BaseForegroundService.notificationManager){
+        notificationManager.createNotificationChannel(notificationChannel)
+        val notification = generateNotification(this@BaseForegroundService)
+        val type =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                 ServiceInfo.FOREGROUND_SERVICE_TYPE_MANIFEST
             } else {
                 0
             }
-    ){
-        notificationManager.createNotificationChannel(notificationChannel)
-        ServiceCompat.startForeground(service, id, notification, type)
+        ServiceCompat.startForeground(this@BaseForegroundService, 1, notification, type)
     }
 }
