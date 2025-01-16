@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.todokanai.baseproject.R
 import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
-import com.todokanai.baseproject.abstracts.multiselectrecyclerview.MultiSelectRecyclerAdapterNew
+import com.todokanai.baseproject.abstracts.multiselectrecyclerview.MultiSelectRecyclerAdapter
 import com.todokanai.baseproject.data.dataclass.TestHolderItem
 import com.todokanai.baseproject.holders.TestHolder
 import kotlinx.coroutines.flow.Flow
 
-/** example of [MultiSelectRecyclerAdapterNew] instance **/
+/** example of [MultiSelectRecyclerAdapter] instance **/
 class MultiSelectTestAdapter(
     itemFlow: Flow<List<TestHolderItem>>
-): MultiSelectRecyclerAdapterNew<TestHolderItem>(itemFlow) {
+): MultiSelectRecyclerAdapter<TestHolderItem>(itemFlow) {
 
     override val selectionId = "selectionId"
 
