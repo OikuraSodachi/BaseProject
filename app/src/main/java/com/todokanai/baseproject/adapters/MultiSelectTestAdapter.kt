@@ -44,12 +44,4 @@ class MultiSelectTestAdapter(
             holder.itemView.setBackgroundColor(0)
         }
     }
-
-    /*
-    override fun observerCallback() {
-        /** position of item (starts from 0 ) **/
-        val position = selectionTracker.selection.map{it.toInt()}
-        println("observerCallback: $position")
-    }
-     */
 }

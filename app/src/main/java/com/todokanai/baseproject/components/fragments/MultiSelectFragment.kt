@@ -44,6 +44,7 @@ class MultiSelectFragment : Fragment() {
                 adapter = multiTestAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             }
+
             swipe.run{
                 setOnRefreshListener {
                     // refresh item list here
