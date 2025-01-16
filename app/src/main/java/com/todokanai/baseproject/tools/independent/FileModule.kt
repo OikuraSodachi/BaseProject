@@ -45,7 +45,7 @@ class FileModule(defaultPath:File) {
 
     /** Todokanai
      *
-     *  == File.dirTree_td()
+     *  @return fileTree intended for fileManager application
      * */
     private fun File.dirTree(): List<File> {
         val result = mutableListOf<File>()
@@ -63,9 +63,8 @@ class FileModule(defaultPath:File) {
      *
      *  requires ContentProvider
      *
-     *  onFailure: no application available to open the file, etc...
-     *
-     *  mimeType: Mime type of the given file
+     *  @param mimeType Mime type of the given file
+     *  @param onFailure no application available to open the file, etc...
      * **/
     private fun openFile_td(
         context: Context,
@@ -82,7 +81,6 @@ class FileModule(defaultPath:File) {
                 file
             ), mimeType
         )
-        // println("mimeType: $mimeType")
         try {
             ActivityCompat.startActivity(context, intent, null)
         } catch (t:Throwable){

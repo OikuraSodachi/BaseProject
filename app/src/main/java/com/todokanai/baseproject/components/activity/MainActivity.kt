@@ -3,10 +3,9 @@ package com.todokanai.baseproject.components.activity
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.viewModels
-import com.google.android.material.tabs.TabLayoutMediator
 import com.todokanai.baseproject.R
 import com.todokanai.baseproject.abstracts.BaseActivity
-import com.todokanai.baseproject.adapters.FragmentAdapter
+import com.todokanai.baseproject.adapters.TestViewPager
 import com.todokanai.baseproject.components.fragments.MultiSelectFragment
 import com.todokanai.baseproject.components.fragments.TestFragment
 import com.todokanai.baseproject.databinding.ActivityMainBinding
@@ -28,21 +27,22 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
     //    val composeViewVisibility = mutableStateOf(false)
-
         val fragList = listOf(MultiSelectFragment(),TestFragment())
-        val viewPagerAdapter = FragmentAdapter(this)
-        viewPagerAdapter.fragmentList = fragList
+        val textList = listOf(getString(R.string.frag1),getString(R.string.frag2))
+
+        val temp = TestViewPager(
+            viewPager = binding.mainViewPager,
+            fragList = fragList,
+            textList = textList
+        )
+
+        temp.applyMacro(
+            this,
+            binding.bottomTab
+        )
+
 
         binding.run{
-            mainViewPager.run{
-                //isUserInputEnabled = false
-                adapter = viewPagerAdapter
-            }
-
-            TabLayoutMediator(binding.bottomTab,binding.mainViewPager){tab,position ->
-                val list = listOf(getString(R.string.frag1),getString(R.string.frag2))
-                tab.text =  list[position]
-            }.attach()
             /*
             composeTest.apply {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
@@ -55,7 +55,6 @@ class MainActivity : BaseActivity() {
                     }
                 }
             }
-
              */
         }
 
