@@ -11,9 +11,9 @@ import kotlinx.coroutines.flow.Flow
  * Automatically handles recyclerView Item update
  *  @param itemFlow [Flow] of itemList
  *  **/
-abstract class BaseRecyclerAdapter<E:Any>(
+abstract class BaseRecyclerAdapterNew<E:Any>(
     itemFlow: Flow<List<E>>,
-): RecyclerView.Adapter<BaseRecyclerViewHolder<E>>() {
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val itemLiveData = itemFlow.asLiveData()
     var itemList = emptyList<E>()
@@ -32,9 +32,12 @@ abstract class BaseRecyclerAdapter<E:Any>(
         return itemList.size
     }
 
+    /*
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
         holder.onInit(itemList[position])
     }
+
+     */
 
     @CallSuper
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {

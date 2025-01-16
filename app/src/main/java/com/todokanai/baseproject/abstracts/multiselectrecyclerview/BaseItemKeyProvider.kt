@@ -4,7 +4,7 @@ import androidx.recyclerview.selection.ItemKeyProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
 
-/** Base class of [ItemKeyProvider] for [MultiSelectRecyclerAdapter] **/
+/** Base class of [ItemKeyProvider] for [MultiSelectRecyclerAdapterNew] **/
 class BaseItemKeyProvider(private val recyclerView: RecyclerView): ItemKeyProvider<Long>(SCOPE_MAPPED) {
     override fun getKey(position: Int): Long? {
         val holder = recyclerView.findViewHolderForAdapterPosition(position)

@@ -4,7 +4,7 @@ import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
 
-/** Base class of [SelectionTracker.SelectionPredicate] for [MultiSelectRecyclerAdapter] **/
+/** Base class of [SelectionTracker.SelectionPredicate] for [MultiSelectRecyclerAdapterNew] **/
 class BaseSelectionPredicate(private val recyclerView: RecyclerView) : SelectionTracker.SelectionPredicate<Long>() {
     override fun canSetStateForKey(key: Long, nextState: Boolean): Boolean {
         val holder = recyclerView.findViewHolderForItemId(key)

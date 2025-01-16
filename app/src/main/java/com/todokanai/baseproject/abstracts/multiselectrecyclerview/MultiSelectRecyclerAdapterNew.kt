@@ -5,20 +5,19 @@ import androidx.annotation.CallSuper
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.RecyclerView
-import com.todokanai.baseproject.abstracts.BaseRecyclerAdapter
-import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
+import com.todokanai.baseproject.abstracts.BaseRecyclerAdapterNew
 import kotlinx.coroutines.flow.Flow
 
-/** [BaseRecyclerAdapter] with multi-selection feature
+/** [BaseRecyclerAdapterNew] with multi-selection feature
  *
  * key:Long == position:Int .toLong()
  *
  * position:Int == key:Long .toInt()
  * @param itemFlow [Flow] of recyclerview items
  * **/
-abstract class MultiSelectRecyclerAdapter<E:Any>(
+abstract class MultiSelectRecyclerAdapterNew<E:Any>(
     itemFlow: Flow<List<E>>
-): BaseRecyclerAdapter<E>(itemFlow) {
+): BaseRecyclerAdapterNew<E>(itemFlow) {
     lateinit var selectionTracker: SelectionTracker<Long>
     abstract val selectionId:String
 
@@ -61,8 +60,8 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
     }
 
     @CallSuper
-    override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
-        super.onBindViewHolder(holder, position)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+      //  super.onBindViewHolder(holder, position)
         onSelectionChanged(holder,isSelected(position))   //holder의 selected 여부 변경시 처리
     }
 
@@ -76,7 +75,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
 
     }
 
-    abstract fun onSelectionChanged(holder:BaseRecyclerViewHolder<E>, isSelected:Boolean)
+    abstract fun onSelectionChanged(holder: RecyclerView.ViewHolder, isSelected:Boolean)
 
     /** returns the [Set] of selected Items **/
     fun selectedItems(): Set<E>{

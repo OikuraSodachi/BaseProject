@@ -20,7 +20,7 @@ class MultiSelectFragment : Fragment() {
 
     private val viewModel:MultiSelectViewModel by viewModels()
     private val binding by lazy{FragmentMultiSelectBinding.inflate(layoutInflater)}
-    private val isSwipeEnabled = MutableStateFlow<Boolean>(true)
+    private val isSwipeEnabled = MutableStateFlow<Boolean>(false)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
