@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import com.todokanai.baseproject.abstracts.BaseActivity
 import com.todokanai.baseproject.adapters.FragmentAdapter
 import com.todokanai.baseproject.components.fragments.MultiSelectFragment
+import com.todokanai.baseproject.components.fragments.TestFragment
 import com.todokanai.baseproject.databinding.ActivityMainBinding
 import com.todokanai.baseproject.myobjects.Constants.PERMISSION_REQUEST_CODE
 import com.todokanai.baseproject.myobjects.Objects
@@ -23,20 +24,21 @@ class MainActivity : BaseActivity() {
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private val viewModel : MainViewModel by viewModels()
 
-    private val fragList = listOf(MultiSelectFragment())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
 
         val composeViewVisibility = mutableStateOf(false)
 
-        val viewPagerAdapter = FragmentAdapter(this).apply {
-            fragmentList = fragList
-        }
+        val fragList = listOf(MultiSelectFragment(),TestFragment())
+        val viewPagerAdapter = FragmentAdapter(this)
+        viewPagerAdapter.fragmentList = fragList
 
         binding.run{
             mainViewPager.run{
-                isUserInputEnabled = false
+                //isUserInputEnabled = false
                 adapter = viewPagerAdapter
+
             }
 
             composeTest.apply {
@@ -54,6 +56,5 @@ class MainActivity : BaseActivity() {
         onBackPressedDispatcher.addCallback {
 
         }
-        setContentView(binding.root)
     }
 }
