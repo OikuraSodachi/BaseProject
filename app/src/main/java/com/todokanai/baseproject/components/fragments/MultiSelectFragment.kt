@@ -10,16 +10,16 @@ import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.todokanai.baseproject.adapters.MultiSelectTestAdapter
 import com.todokanai.baseproject.adapters.TestRecyclerAdapter
-import com.todokanai.baseproject.databinding.FragmentTestBinding
-import com.todokanai.baseproject.viewmodel.TestFragViewModel
+import com.todokanai.baseproject.databinding.FragmentMultiSelectBinding
+import com.todokanai.baseproject.viewmodel.MultiSelectViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @AndroidEntryPoint
-class TestFragment : Fragment() {
+class MultiSelectFragment : Fragment() {
 
-    private val viewModel:TestFragViewModel by viewModels()
-    private val binding by lazy{FragmentTestBinding.inflate(layoutInflater)}
+    private val viewModel:MultiSelectViewModel by viewModels()
+    private val binding by lazy{FragmentMultiSelectBinding.inflate(layoutInflater)}
     private val isSwipeEnabled = MutableStateFlow<Boolean>(true)
 
     override fun onCreateView(

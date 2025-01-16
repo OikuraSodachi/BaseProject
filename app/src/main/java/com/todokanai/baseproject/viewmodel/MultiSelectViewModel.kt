@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 @HiltViewModel
-class TestFragViewModel @Inject constructor() : ViewModel() {
+class MultiSelectViewModel @Inject constructor() : ViewModel() {
 
     val list : List<TestHolderItem> = listOf(
         TestHolderItem(null,"stringData",1),
