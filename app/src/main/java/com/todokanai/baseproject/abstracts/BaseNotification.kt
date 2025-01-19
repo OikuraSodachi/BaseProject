@@ -11,7 +11,6 @@ import androidx.core.app.NotificationManagerCompat
  *
  * @param context Context of notification
  * @param notificationChannel default channel for the notification
- *
  * **/
 abstract class BaseNotification(
     val context: Context,
