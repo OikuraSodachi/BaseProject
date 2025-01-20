@@ -2,7 +2,6 @@ package com.todokanai.baseproject.tools
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.todokanai.baseproject.R
@@ -10,9 +9,10 @@ import com.todokanai.baseproject.abstracts.BaseNotification
 import com.todokanai.baseproject.di.MyApplication.Companion.appContext
 import com.todokanai.baseproject.myobjects.Constants
 
+/** example of [BaseNotification] instance **/
 class Notifications(
-    notificationManager:NotificationManagerCompat
-): BaseNotification(notificationManager) {
+    val notificationManager:NotificationManagerCompat
+): BaseNotification() {
 
     companion object{
 
@@ -41,7 +41,6 @@ class Notifications(
         private const val PRIVATE = NotificationCompat.VISIBILITY_PRIVATE
     }
 
-
     val defaultChannel = NotificationChannel(
         Constants.CHANNEL_ID,
         Constants.NOTIFICATION_CHANNEL_NAME,
@@ -50,32 +49,21 @@ class Notifications(
         notificationManager.createNotificationChannel(this)
     }
 
-    private val dBuilder = NotificationCompat.Builder(appContext,defaultChannel.id)
-
-    fun postNotification(context: Context,contentText: String){
-        post(
-            context = context,
-            title = "Title",
-            contentText = contentText,
-            channel = defaultChannel,
-            visibility = PRIVATE
-        )
-    }
-
     override fun appIcon(): Int {
         return R.drawable.ic_launcher_foreground
     }
 
-    override fun postNoti(title: String, contentText: String) {
+    override fun postNotification(title: String, contentText: String) {
         val temp =builder()
             .setContentTitle(title)
             .setContentText(contentText)
+            .setSmallIcon(appIcon())
             .setVisibility(PUBLIC)
             .build()
         notificationManager.notify(1,temp)
     }
 
     override fun builder(): NotificationCompat.Builder {
-        return dBuilder
+        return NotificationCompat.Builder(appContext,defaultChannel.id)
     }
 }

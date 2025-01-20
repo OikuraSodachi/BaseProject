@@ -109,6 +109,8 @@ fun isPermissionGranted_td(activity: Activity, permission: String):Boolean{
 
 /** requestCode를 111로 냅둬도 무방한게 정말 맞는지 확인 필요
  *
+ * requires targetSdk 33 in gradle
+ *
  * system에 permission n개를 한번에 요청함
  **/
 fun requestPermission_td(

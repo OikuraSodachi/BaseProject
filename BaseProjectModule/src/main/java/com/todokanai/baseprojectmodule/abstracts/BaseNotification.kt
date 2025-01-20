@@ -6,12 +6,9 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 
 /** Notification 관리를 위한 class **/
-abstract class BaseNotification(
-    val notificationManager:NotificationManagerCompat
-) {
+abstract class BaseNotification() {
 
     companion object{
 
@@ -59,37 +56,10 @@ abstract class BaseNotification(
         return result
     }
 
-    /** post the notification
-     *
-     * @param context context
-     * @param title title of the notification
-     * @param contentText text to show on the notification
-     * @param channel notification channel
-     * @param id id of the notification
-     * **/
-    fun post(
-        context: Context,
-        title:String,
-        contentText:String,
-        channel: NotificationChannel,
-        visibility: Int = PRIVATE,
-        id:Int = 1,  // Todo: NotificationChannel 이 여러개 있을 경우, id값 조정이 필요
-    ){
-        val noti =
-            basicNotification(
-                context,
-                title,
-                contentText,
-                channel,
-                visibility
-            )
-        notificationManager.notify(id,noti)
-    }
-
     /** get the smallIcon for the notification **/
     abstract fun appIcon():Int
 
-    abstract fun postNoti(
+    abstract fun postNotification(
         title:String,
         contentText:String,
     )
