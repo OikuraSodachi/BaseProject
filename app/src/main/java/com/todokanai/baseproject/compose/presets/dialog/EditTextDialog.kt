@@ -17,11 +17,11 @@ import androidx.compose.ui.tooling.preview.Preview
 fun EditTextDialog(
     title: String,
     defaultText:String,
-    cancelText:String = "Cancel",
-    confirmText:String = "Confirm",
     onConfirm: (String) -> Unit,
     onCancel: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    cancelText:String = "Cancel",
+    confirmText:String = "Confirm"
 ) {
     var text by remember { mutableStateOf("") }
     AlertDialog(
