@@ -18,11 +18,11 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun SelectDialog(
-    modifier : Modifier,
-    title:String ?= null,
     items: List<Pair<String,()->Unit>>,
-    selectedItem:String?,
     onDismissRequest:()->Unit,
+    selectedItem:String?,
+    modifier : Modifier = Modifier,
+    title:String ?= null,
     confirmText:String ?=null,
     dismissText:String ?=null,
     onConfirm:(()->Unit)? =null,

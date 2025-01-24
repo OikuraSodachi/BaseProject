@@ -1,6 +1,5 @@
 package com.todokanai.baseproject.compose.presets.dropdownmenu
 
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
@@ -18,16 +17,15 @@ import androidx.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyExposedDropdownMenu(
-    modifier: Modifier,
     contents: List<String>,
-    onItemSelect: (item:String)->Unit
+    onItemSelect: (item:String)->Unit,
+    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf(contents[0]) }
 
     ExposedDropdownMenuBox(
-        modifier = modifier
-            .wrapContentSize(),
+        modifier = modifier,
         expanded = expanded,
         onExpandedChange = {
             expanded = !expanded
@@ -51,13 +49,11 @@ fun MyExposedDropdownMenu(
                         selectedText = item
                         expanded = false
                         onItemSelect(item)
-
                     }
                 )
             }
         }
     }
-
 }
 
 @Preview
