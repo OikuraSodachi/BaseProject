@@ -48,48 +48,45 @@ android {
 }
 
 dependencies {
-    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
-    implementation("com.google.firebase:firebase-common-ktx:21.0.0")
-    implementation("com.google.firebase:firebase-database-ktx:21.0.0")
-    val composeBom = platform("androidx.compose:compose-bom:2024.06.00")
-    val roomVersion = "2.6.1"
-    val glideVersion = "4.13.0"
+    implementation(libs.androidx.recyclerview.selection)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.database.ktx)
 
-    implementation (composeBom)
-    testImplementation (composeBom)
+    implementation (platform(libs.androidx.compose.bom))
+    testImplementation (platform(libs.androidx.compose.bom))
 
-    implementation ("androidx.core:core-ktx:1.9.0")
-    implementation ("androidx.lifecycle:lifecycle-common:2.8.4")
-    implementation ("androidx.activity:activity-compose:1.9.1")
+    implementation (libs.androidx.ktx)
+    implementation (libs.androidx.lifecycle.common)
+    implementation (libs.androidx.activity.compose)
 
-    testImplementation ("junit:junit:4.13.2")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.5.1")
-    implementation ("androidx.lifecycle:lifecycle-runtime-compose-android:2.8.4")
-    implementation ("androidx.constraintlayout:constraintlayout:2.1.4")     // enable ConstraintLayout
-    implementation ("com.google.android.material:material:1.12.0")
-    implementation ("androidx.fragment:fragment-ktx:1.7.1")
+    testImplementation (libs.junit)
+    androidTestImplementation (libs.androidx.junit)
+    androidTestImplementation (libs.androidx.espresso.core)
+    implementation (libs.androidx.lifecycle.runtime.compose.android)
+    implementation (libs.androidx.constraintlayout)     // enable ConstraintLayout
+    implementation (libs.material)
+    implementation (libs.androidx.fragment.ktx)
 
-    implementation ("androidx.room:room-runtime:$roomVersion")
-    kapt ("androidx.room:room-compiler:$roomVersion")
-    implementation ("androidx.room:room-ktx:$roomVersion")
+    implementation (libs.androidx.room.runtime)
+    kapt (libs.androidx.room.compiler)
+    implementation (libs.androidx.room.ktx)
 
-    implementation ("androidx.legacy:legacy-support-v4:1.0.0")
+    implementation (libs.androidx.legacy.support.v4)
 
-    debugImplementation ("androidx.compose.ui:ui-tooling")
-    implementation ("androidx.compose.ui:ui:1.6.8")
-    implementation ("androidx.compose.material3:material3:1.2.1")
+    debugImplementation (libs.androidx.ui.tooling)
+    implementation (libs.androidx.ui)
+    implementation (libs.androidx.material3)
 
-    implementation ("com.squareup.picasso:picasso:2.8")
-    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation (libs.picasso)
+    implementation (libs.androidx.hilt.navigation.compose)
 
-    implementation ("io.coil-kt:coil-compose:2.1.0")
-    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")     // ConstraintLayout for compose
-    implementation ("androidx.appcompat:appcompat:1.6.1")
+    implementation (libs.coil.compose)
+    implementation (libs.androidx.constraintlayout.compose)     // ConstraintLayout for compose
+    implementation (libs.androidx.appcompat)
 
-    implementation ("com.github.bumptech.glide:glide:$glideVersion")
-    annotationProcessor ("com.github.bumptech.glide:compiler:$glideVersion")
-    implementation ("com.google.dagger:hilt-android:2.44")
-    kapt ("com.google.dagger:hilt-android-compiler:2.44")
-    implementation ("androidx.datastore:datastore-preferences:1.1.0-alpha01")       // enable DataStore
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.android.compiler)
+    implementation (libs.androidx.datastore.preferences)       // enable DataStore
 }
