@@ -12,17 +12,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyExposedDropdownMenu(
     contents: List<String>,
     onItemSelect: (item:String)->Unit,
-    modifier: Modifier = Modifier
+    selected:String,
+    modifier: Modifier = Modifier,
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf(contents[0]) }
 
     ExposedDropdownMenuBox(
         modifier = modifier,
@@ -32,36 +31,28 @@ fun MyExposedDropdownMenu(
         }
     ) {
         TextField(
-            value = selectedText,
+            value = selected,
             onValueChange = {},
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            modifier = Modifier.menuAnchor()
+            modifier = modifier
+                .menuAnchor()
         )
         ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
+            modifier = modifier
         ) {
             contents.forEach { item ->
                 DropdownMenuItem(
                     text = { Text(text = item) },
                     onClick = {
-                        selectedText = item
                         expanded = false
                         onItemSelect(item)
-                    }
+                    },
+                    modifier = modifier
                 )
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun MyExposedDropdownMenuPreview(){
-    MyExposedDropdownMenu(
-        modifier = Modifier,
-        contents = listOf("1","2","3"),
-        onItemSelect = {}
-    )
 }
