@@ -1,0 +1,62 @@
+[versions]
+activityCompose = "1.9.1"
+appcompat = "1.6.1"
+coilCompose = "2.1.0"
+composeBom = "2024.06.00"
+constraintlayout = "2.1.4"
+constraintlayoutCompose = "1.0.1"
+datastorePreferences = "1.1.0-alpha01"
+espressoCore = "3.5.1"
+firebaseCommonKtx = "21.0.0"
+fragmentKtx = "1.7.1"
+glideVersion = "4.13.0"
+hiltAndroid = "2.44"
+hiltAndroidCompiler = "2.44"
+hiltNavigationCompose = "1.2.0"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+ktx = "1.9.0"
+legacySupportV4 = "1.0.0"
+lifecycleCommon = "2.8.4"
+material = "1.12.0"
+material3 = "1.2.1"
+picasso = "2.8"
+recyclerviewSelection = "1.1.0"
+roomVersion = "2.6.1"
+ui = "1.6.8"
+
+[libraries]
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+androidx-espresso-core = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCore" }
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "fragmentKtx" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+androidx-junit = { module = "androidx.test.ext:junit", version.ref = "junitVersion" }
+androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
+androidx-legacy-support-v4 = { module = "androidx.legacy:legacy-support-v4", version.ref = "legacySupportV4" }
+androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycleCommon" }
+androidx-lifecycle-runtime-compose-android = { module = "androidx.lifecycle:lifecycle-runtime-compose-android", version.ref = "lifecycleCommon" }
+androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+androidx-recyclerview-selection = { module = "androidx.recyclerview:recyclerview-selection", version.ref = "recyclerviewSelection" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomVersion" }
+androidx-ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glideVersion" }
+firebase-common-ktx = { module = "com.google.firebase:firebase-common-ktx", version.ref = "firebaseCommonKtx" }
+firebase-database-ktx = { module = "com.google.firebase:firebase-database-ktx", version.ref = "firebaseCommonKtx" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glideVersion" }
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
+junit = { module = "junit:junit", version.ref = "junit" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+picasso = { module = "com.squareup.picasso:picasso", version.ref = "picasso" }
+ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+
+[plugins]
