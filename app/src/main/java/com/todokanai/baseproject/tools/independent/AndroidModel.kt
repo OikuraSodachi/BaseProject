@@ -163,6 +163,8 @@ fun getPhysicalStorages_td(context: Context):List<File>{
 
 /** Todokanai
  *
+ * Todo: parameter 에서 activity:Activity 대신 context:Context 로 선언해도 될지 체크하기
+ *
  * 모든 파일 접근 권한 요청 **/
 fun requestStorageManageAccess_td(activity: Activity){
     val intent = Intent()
