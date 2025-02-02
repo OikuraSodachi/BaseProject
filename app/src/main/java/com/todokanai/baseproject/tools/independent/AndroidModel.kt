@@ -23,6 +23,8 @@ import android.provider.Settings
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -359,4 +361,16 @@ fun getPathFromUri_td(context: Context, uri: Uri): String? {
     }
 
     return null
+}
+
+/**
+ *  @param activity activity to apply fullscreen
+ * **/
+fun applyFullscreen_td(activity: Activity){
+    activity.window.insetsController.apply {
+        this?.let{
+            hide(WindowInsets.Type.systemBars())
+            systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
 }
