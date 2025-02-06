@@ -243,3 +243,12 @@ else
         ".3gp", ".mpg", ".mpeg", ".mpe", ".mp4", ".avi", ".ogv", ".webm" -> "video/*"
         else -> "*/*"
     }
+
+/** @param filePath absolutePath string of file
+ * @return absolutePath of parent file. null if unable to.
+ * **/
+fun getParentAbsolutePath_td(filePath: String): String? {
+    val regex = Regex("^(.*)[/\\\\][^/\\\\]+$") // 파일 경로에서 마지막 디렉터리 이전 부분을 추출
+    val matchResult = regex.find(filePath)
+    return matchResult?.groupValues?.get(1) // 첫 번째 그룹이 부모 디렉터리 경로
+}
