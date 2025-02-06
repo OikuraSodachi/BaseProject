@@ -252,3 +252,9 @@ fun getParentAbsolutePath_td(filePath: String): String? {
     val matchResult = regex.find(filePath)
     return matchResult?.groupValues?.get(1) // 첫 번째 그룹이 부모 디렉터리 경로
 }
+
+/** file 을 확장자 없이 생성했을 경우, regex 필터가 걸러내지 못할 수 있음에 주의
+ * @param filePath absolutePath of file
+ * @return true if the file is a directory, else false
+ * **/
+fun isDirectoryByRegex_td(filePath: String) : Boolean = Regex(".+[\\\\/]$").matches(filePath)    // // 경로가 '/' 또는 '\'로 끝나면 directory 로 판단
