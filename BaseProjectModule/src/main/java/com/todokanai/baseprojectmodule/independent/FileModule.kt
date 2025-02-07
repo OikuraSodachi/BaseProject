@@ -15,11 +15,8 @@ import java.io.File
 
 class FileModule(defaultPath:File) {
 
-    /** 현재 보고있는 Directory
-     *
-     *  Primary Key(?)
-     * **/
-    private val _currentPath = MutableStateFlow(defaultPath)
+    /** 현재 보고있는 Directory. Primary Key(?) **/
+    private val _currentPath = MutableStateFlow(defaultPath) // 굳이 StateFlow 로 선언할 필요 없는 듯?
     val currentPath : Flow<File>
         get() = _currentPath
 
@@ -36,7 +33,7 @@ class FileModule(defaultPath:File) {
 
     fun updateCurrentPath(directory:File){
         if(directory.listFiles()!=null) {        // 접근 가능 여부 체크
-            _currentPath.value = directory
+            _currentPath.value = directory      // StateFlow.value 입력 작업 비스무리하게 Flow 에도 하면 딱인데...
         }
     }
 
@@ -44,9 +41,7 @@ class FileModule(defaultPath:File) {
     val notAccessible = currentPath.map { it.listFiles() == null }
 
     /** Todokanai
-     *
-     *  @return fileTree intended for fileManager application
-     * */
+     *  @return fileTree intended for fileManager application */
     private fun File.dirTree(): List<File> {
         val result = mutableListOf<File>()
         var now = this
@@ -59,13 +54,9 @@ class FileModule(defaultPath:File) {
 
     /** Todokanai
      *
-     *  open the file with a compatible application
-     *
-     *  requires ContentProvider
-     *
+     *  open the file with compatible application
      *  @param mimeType Mime type of the given file
-     *  @param onFailure no application available to open the file, etc...
-     * **/
+     *  @param onFailure no application available to open the file, etc... **/
     fun openFile_td(
         context: Context,
         file: File,
