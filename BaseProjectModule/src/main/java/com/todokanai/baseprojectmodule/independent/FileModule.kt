@@ -13,13 +13,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import java.io.File
 
-class FileModule(defaultPath:File) {
+class FileModule(defaultPath:String) {
 
     /** 현재 보고있는 Directory
      *
      *  Primary Key(?)
      * **/
-    private val _currentPath = MutableStateFlow(defaultPath)
+    private val _currentPath = MutableStateFlow(File(defaultPath))
     val currentPath : Flow<File>
         get() = _currentPath
 
@@ -45,7 +45,7 @@ class FileModule(defaultPath:File) {
 
     /** Todokanai
      *
-     *  == File.dirTree_td()
+     *  @return fileTree intended for fileManager application
      * */
     private fun File.dirTree(): List<File> {
         val result = mutableListOf<File>()
@@ -63,11 +63,10 @@ class FileModule(defaultPath:File) {
      *
      *  requires ContentProvider
      *
-     *  onFailure: no application available to open the file, etc...
-     *
-     *  mimeType: Mime type of the given file
+     *  @param mimeType Mime type of the given file
+     *  @param onFailure no application available to open the file, etc...
      * **/
-    private fun openFile_td(
+    fun openFile_td(
         context: Context,
         file: File,
         mimeType:String,
@@ -82,7 +81,6 @@ class FileModule(defaultPath:File) {
                 file
             ), mimeType
         )
-        // println("mimeType: $mimeType")
         try {
             ActivityCompat.startActivity(context, intent, null)
         } catch (t:Throwable){

@@ -2,8 +2,8 @@ package com.todokanai.baseprojectmodule.independent
 
 
 /**
- * @param [list] list of items
- * @param [current] current item
+ * @param list list of items
+ * @param current current item
  * @return next element of the [list], or the first element(if [current] is the last element). -1 if [list] does not contain [current]
  * **/
 fun <Type:Any> getCircularNext_td(list:List<Type>, current:Type):Type{
@@ -16,8 +16,8 @@ fun <Type:Any> getCircularNext_td(list:List<Type>, current:Type):Type{
 }
 
 /**
- * @param [list] list of items
- * @param [current] current item
+ * @param list list of items
+ * @param current current item
  * @return previous element of the [list], or the last element( if [current] is the first element ). -1 if [list] does not contain [current]
  * **/
 fun <Type:Any> getCircularPrev_td(list:List<Type>,current:Type):Type{

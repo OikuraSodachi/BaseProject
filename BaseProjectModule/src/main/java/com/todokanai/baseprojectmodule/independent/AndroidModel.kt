@@ -23,6 +23,8 @@ import android.provider.Settings
 import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -85,7 +87,6 @@ fun setupTimber_td() {
         }
     )
 }
-
  */
 
 fun setMediaPlaybackState_td(state:Int,mediaSession:MediaSessionCompat){
@@ -109,6 +110,8 @@ fun isPermissionGranted_td(activity: Activity, permission: String):Boolean{
 
 
 /** requestCode를 111로 냅둬도 무방한게 정말 맞는지 확인 필요
+ *
+ * requires targetSdk 33 in gradle
  *
  * system에 permission n개를 한번에 요청함
  **/
@@ -161,6 +164,8 @@ fun getPhysicalStorages_td(context: Context):List<File>{
 }
 
 /** Todokanai
+ *
+ * Todo: parameter 에서 activity:Activity 대신 context:Context 로 선언해도 될지 체크하기
  *
  * 모든 파일 접근 권한 요청 **/
 fun requestStorageManageAccess_td(activity: Activity){
@@ -232,7 +237,6 @@ fun popupMenu_td(
         show()
     }
 }
-
 
 /**
  * Get a file path from a Uri. This will get the the path for Storage Access
@@ -357,4 +361,16 @@ fun getPathFromUri_td(context: Context, uri: Uri): String? {
     }
 
     return null
+}
+
+/**
+ *  @param activity activity to apply fullscreen
+ * **/
+fun applyFullscreen_td(activity: Activity){
+    activity.window.insetsController.apply {
+        this?.let{
+            hide(WindowInsets.Type.systemBars())
+            systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
+    }
 }

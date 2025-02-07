@@ -13,13 +13,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import java.io.File
 
-class FileModule(defaultPath:File) {
+class FileModule(defaultPath:String) {
 
     /** 현재 보고있는 Directory
      *
      *  Primary Key(?)
      * **/
-    private val _currentPath = MutableStateFlow(defaultPath)
+    private val _currentPath = MutableStateFlow(File(defaultPath))
     val currentPath : Flow<File>
         get() = _currentPath
 
@@ -66,7 +66,7 @@ class FileModule(defaultPath:File) {
      *  @param mimeType Mime type of the given file
      *  @param onFailure no application available to open the file, etc...
      * **/
-    private fun openFile_td(
+    fun openFile_td(
         context: Context,
         file: File,
         mimeType:String,
