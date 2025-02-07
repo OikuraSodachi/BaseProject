@@ -13,13 +13,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import java.io.File
 
-class FileModule(defaultPath:String) {
+class FileModule(defaultPath:File) {
 
     /** 현재 보고있는 Directory
      *
      *  Primary Key(?)
      * **/
-    private val _currentPath = MutableStateFlow(File(defaultPath))
+    private val _currentPath = MutableStateFlow(defaultPath)
     val currentPath : Flow<File>
         get() = _currentPath
 
