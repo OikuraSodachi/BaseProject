@@ -16,7 +16,7 @@ import java.io.File
 class FileModule(defaultPath:File) {
 
     /** 현재 보고있는 Directory. Primary Key(?) **/
-    private val _currentPath = MutableStateFlow(defaultPath) // 굳이 StateFlow 로 선언할 필요 없는 듯?
+    private val _currentPath = MutableStateFlow(defaultPath)
     val currentPath : Flow<File>
         get() = _currentPath
 
@@ -33,7 +33,7 @@ class FileModule(defaultPath:File) {
 
     fun updateCurrentPath(directory:File){
         if(directory.listFiles()!=null) {        // 접근 가능 여부 체크
-            _currentPath.value = directory      // StateFlow.value 입력 작업 비스무리하게 Flow 에도 하면 딱인데...
+            _currentPath.value = directory
         }
     }
 
