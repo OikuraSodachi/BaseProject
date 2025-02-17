@@ -374,3 +374,13 @@ fun applyFullscreen_td(activity: Activity){
         }
     }
 }
+
+/** @param fileName name of image file inside zip file to get
+ * @param zipFilePath absolutePath of zip file
+ * @return Bitmap instance of image file. returns null if unable to get one **/
+fun getImageFromZip_td(fileName: String, zipFilePath: String): Bitmap? {
+    val zipFile = ZipFile(zipFilePath)
+    val entry = zipFile.getEntry(fileName) ?: return null
+    val inputStream: InputStream = zipFile.getInputStream(entry)
+    return BitmapFactory.decodeStream(inputStream)
+}

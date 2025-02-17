@@ -33,7 +33,9 @@ import androidx.core.content.FileProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.InputStream
 import java.text.SimpleDateFormat
+import java.util.zip.ZipFile
 import kotlin.system.exitProcess
 
 /** Todokanai
@@ -373,4 +375,14 @@ fun applyFullscreen_td(activity: Activity){
             systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
     }
+}
+
+/** @param fileName name of image file inside zip file to get
+ * @param zipFilePath absolutePath of zip file
+ * @return Bitmap instance of image file. returns null if unable to get one **/
+fun getImageFromZip_td(fileName: String, zipFilePath: String): Bitmap? {
+    val zipFile = ZipFile(zipFilePath)
+    val entry = zipFile.getEntry(fileName) ?: return null
+    val inputStream: InputStream = zipFile.getInputStream(entry)
+    return BitmapFactory.decodeStream(inputStream)
 }
