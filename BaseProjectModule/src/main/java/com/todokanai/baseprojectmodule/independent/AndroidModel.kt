@@ -377,7 +377,7 @@ fun applyFullscreen_td(activity: Activity){
     }
 }
 
-/** @param fileName name of image file inside zip file to get
+/** @param fileName path of image file inside zip file to get
  * @param zipFilePath absolutePath of zip file
  * @return Bitmap instance of image file. returns null if unable to get one **/
 fun getImageFromZip_td(fileName: String, zipFilePath: String): Bitmap? {
