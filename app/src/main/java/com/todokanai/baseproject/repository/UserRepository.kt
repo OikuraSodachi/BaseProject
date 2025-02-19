@@ -2,9 +2,6 @@ package com.todokanai.baseproject.repository
 
 import com.todokanai.baseproject.data.room.User
 import com.todokanai.baseproject.data.room.UserDao
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,23 +12,15 @@ class UserRepository @Inject constructor(private val userDao:UserDao) {
 
     suspend fun getAllNonFlow() = userDao.getAllNonFlow()
 
-    fun insert(user: User) {
-        CoroutineScope(Dispatchers.IO).launch {
-            userDao.insert(user)
-        }
-    }
+    suspend fun insert(user: User) = userDao.insert(user)
 
-    fun delete(user: User) {
-        CoroutineScope(Dispatchers.IO).launch {
-            userDao.delete(user)
-        }
-    }
+    suspend fun delete(user: User) = userDao.delete(user)
 
-    fun deleteAll() {
-        CoroutineScope(Dispatchers.IO).launch {
-            userDao.deleteAll()
-        }
-    }
+    suspend fun deleteAll() = userDao.deleteAll()
+
+    suspend fun update(number:Long,userValue:Int) = userDao.update(number,userValue)
 
     fun getUserByIndex(no:Long) = userDao.getUserByIndex(no)
+
+    fun getUserByNumber(number:Long) = userDao.getUserByNumber(number)
 }
