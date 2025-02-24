@@ -14,7 +14,7 @@ data class SavedStateFlow<Type:Any>(
 ): StateFlow<Type> {
     private val stateFlowInstance = MutableStateFlow<Type>(initialValue)
 
-    fun setValueTest(value:Type){
+    fun setValue(value:Type){
         stateFlowInstance.value = value
         saveValue(value)
     }
