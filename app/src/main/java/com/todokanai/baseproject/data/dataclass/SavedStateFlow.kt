@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
 /** MutableStateFlow designed for remembering last known value
- *
+ * @author Oikura Sodachi
  * @param initialValue initial value of this stateflow (usually from database)
  * @param saveValue save value to database **/
 data class SavedStateFlow<Type:Any>(
