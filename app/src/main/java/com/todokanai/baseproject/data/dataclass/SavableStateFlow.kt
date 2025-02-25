@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
  * @param initialValue initial value of this stateflow (usually from database)
  * @param saveValue save value to database **/
 data class SavableStateFlow<Type:Any>(
-    val initialValue:Type,
-    val saveValue:(value:Type)->Unit
+    private val initialValue:Type,
+    private val saveValue:(value:Type)->Unit
 ): StateFlow<Type> {
     private val stateFlowInstance = MutableStateFlow<Type>(initialValue)
 
