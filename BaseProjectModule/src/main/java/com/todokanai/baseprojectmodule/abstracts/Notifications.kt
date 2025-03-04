@@ -1,4 +1,4 @@
-package com.todokanai.baseproject.tools
+package com.todokanai.baseprojectmodule.abstracts
 
 import android.app.Notification
 import android.app.NotificationChannel
