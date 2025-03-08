@@ -83,4 +83,6 @@ dependencies {
     implementation (libs.hilt.android)
     kapt (libs.hilt.android.compiler)
     implementation (libs.androidx.datastore.preferences)       // enable DataStore
+    implementation ("commons-net:commons-net:3.11.1")       /// ftp nas upload (?)
+
 }
