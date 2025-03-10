@@ -4,6 +4,7 @@ package com.todokanai.baseprojectmodule.independent
 
 import org.apache.commons.net.ftp.FTP
 import org.apache.commons.net.ftp.FTPClient
+import org.apache.commons.net.ftp.FTPFile
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -263,6 +264,11 @@ fun getParentAbsolutePath_td(filePath: String): String? {
  * **/
 fun isDirectoryByRegex_td(filePath: String) : Boolean = Regex(".+[\\\\/]$").matches(filePath)    // // 경로가 '/' 또는 '\'로 끝나면 directory 로 판단
 
+/** @param server server ip
+ *  @param username login id
+ *  @param password login password
+ *  @param localFilePath absolutePath of the local file to upload
+ *  @param remoteFilePath absolutePath of remote file to be uploaded **/
 fun uploadFileToFtp_td(
     server: String, // server ip
     username: String,
@@ -274,10 +280,12 @@ fun uploadFileToFtp_td(
     val ftpClient = FTPClient()
     return try {
         // FTP 서버 연결
-        ftpClient.connect(server, port)
-        ftpClient.login(username, password)
-        ftpClient.enterLocalPassiveMode() // Passive Mode 사용 (방화벽 문제 방지)
-        ftpClient.setFileType(FTP.BINARY_FILE_TYPE) // 바이너리 파일 전송
+        ftpClient.run{
+            connect(server, port)
+            login(username, password)
+            enterLocalPassiveMode() // Passive Mode 사용 (방화벽 문제 방지)
+            setFileType(FTP.BINARY_FILE_TYPE) // 바이너리 파일 전송
+        }
 
         val localFile = File(localFilePath)
         FileInputStream(localFile).use { inputStream ->
@@ -303,7 +311,11 @@ fun uploadFileToFtp_td(
     }
 }
 
-/** 아직 미검증 상태 **/
+/** @param server server ip
+ *  @param username login id
+ *  @param password login password
+ *  @param localFilePath absolutePath of the local file to be downloaded
+ *  @param remoteFilePath absolutePath of remote file to download **/
 fun downloadFileFromFtp_td(
     server: String,
     username: String,
@@ -315,10 +327,12 @@ fun downloadFileFromFtp_td(
     val ftpClient = FTPClient()
     return try {
         // FTP 서버 연결
-        ftpClient.connect(server, port)
-        ftpClient.login(username, password)
-        ftpClient.enterLocalPassiveMode() // Passive Mode 사용
-        ftpClient.setFileType(FTP.BINARY_FILE_TYPE) // 바이너리 파일 전송
+        ftpClient.run{
+            connect(server, port)
+            login(username, password)
+            enterLocalPassiveMode() // Passive Mode 사용
+            setFileType(FTP.BINARY_FILE_TYPE) // 바이너리 파일 전송
+        }
 
         val localFile = File(localFilePath)
         FileOutputStream(localFile).use { outputStream ->
@@ -342,4 +356,44 @@ fun downloadFileFromFtp_td(
             ex.printStackTrace()
         }
     }
+}
+
+/** @param server server ip
+ *  @param username login id
+ *  @param password login password
+ *  @param remoteDirectory absolutePath of remote directory to read
+ *  @return contents of the given directory **/
+fun listFilesInFtpDirectory_td(
+    server: String,
+    username: String,
+    password: String,
+    remoteDirectory: String,
+    port: Int = 21
+): Array<FTPFile> {
+    val ftpClient = FTPClient()
+    var result = emptyArray<FTPFile>()
+    try {
+        // FTP 서버 연결
+        ftpClient.run{
+            connect(server, port)
+            login(username, password)
+            enterLocalPassiveMode() // Passive Mode 사용
+        }
+
+        // 특정 디렉토리 내 파일 목록 가져오기
+        result = ftpClient.listFiles(remoteDirectory)
+
+        println("파일 목록 불러오기 성공: $result")
+    } catch (ex: IOException) {
+        ex.printStackTrace()
+        println("파일 목록을 가져오는 중 오류 발생: ${ex.message}")
+    } finally {
+        try {
+            ftpClient.logout()
+            ftpClient.disconnect()
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+        }
+    }
+    return result
 }
