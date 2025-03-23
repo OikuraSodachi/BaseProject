@@ -26,7 +26,7 @@ class MultiSelectTestAdapter(
         return TestHolder(view)
     }
 
-    override fun onBindViewHolder(holder:RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder:BaseRecyclerViewHolder<TestHolderItem>, position: Int) {
         super.onBindViewHolder(holder, position)
         holder.itemView.run{
             setOnClickListener {

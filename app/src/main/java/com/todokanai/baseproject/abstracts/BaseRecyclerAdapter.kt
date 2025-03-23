@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
  *  **/
 abstract class BaseRecyclerAdapter<E:Any>(
     itemFlow: Flow<List<E>>,
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+): RecyclerView.Adapter<BaseRecyclerViewHolder<E>>() {
 
     private val itemLiveData = itemFlow.asLiveData()
     var itemList = emptyList<E>()
