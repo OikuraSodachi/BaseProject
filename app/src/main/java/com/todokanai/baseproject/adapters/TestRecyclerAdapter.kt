@@ -39,4 +39,8 @@ class TestRecyclerAdapter (
             }
         }
     }
+
+    override fun areItemsSame(oldItem: TestHolderItem, newItem: TestHolderItem): Boolean {
+        return oldItem.intData == newItem.intData
+    }
 }

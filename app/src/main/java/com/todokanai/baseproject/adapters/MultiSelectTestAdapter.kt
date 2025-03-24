@@ -29,9 +29,7 @@ class MultiSelectTestAdapter(
 
     override fun onBindViewHolder(holder:BaseRecyclerViewHolder<TestHolderItem>, position: Int) {
         super.onBindViewHolder(holder, position)
-        holder.itemView.run{
 
-        }
     }
 
     override fun onSelectionChanged(
@@ -45,10 +43,13 @@ class MultiSelectTestAdapter(
         }
     }
 
-
     override fun observerCallback() {
         super.observerCallback()
         callback(selectionTracker.hasSelection())
+    }
+
+    override fun areItemsSame(oldItem: TestHolderItem, newItem: TestHolderItem): Boolean {
+        return oldItem.intData == newItem.intData
     }
 
 }

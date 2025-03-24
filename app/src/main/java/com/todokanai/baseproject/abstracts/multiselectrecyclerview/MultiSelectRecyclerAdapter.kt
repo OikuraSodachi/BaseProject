@@ -54,7 +54,6 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
         return position.toLong()
     }
 
-
     @CallSuper
     override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
         holder.onInit(itemList[position])
