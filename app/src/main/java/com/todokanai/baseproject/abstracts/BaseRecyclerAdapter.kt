@@ -22,12 +22,12 @@ abstract class BaseRecyclerAdapter<E:Any>(
         refreshItemList(it)
     }
 
-    /** oldList 와 newList 를 비교해서 dataSetChanged 적용 **/
-    private fun refreshItemList(newList:List<E>){
+     /** [notifyDataSetChanged] 의 최적화 버전 (?) **/
+    fun refreshItemList(newList:List<E>){
         val diffResult = DiffUtil.calculateDiff(BaseRecyclerDiffUtil(itemList, newList))
         itemList = newList
         diffResult.dispatchUpdatesTo(this)
-    }
+    }   // oldList 와 newList 를 비교해서 dataSetChanged 적용
 
     @CallSuper
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
