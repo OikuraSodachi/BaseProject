@@ -13,7 +13,8 @@ import kotlinx.coroutines.flow.Flow
 
 /** example of [MultiSelectRecyclerAdapter] instance **/
 class MultiSelectTestAdapter(
-    itemFlow: Flow<List<TestHolderItem>>
+    itemFlow: Flow<List<TestHolderItem>>,
+    val callback:(selectionEnabled:Boolean)->Unit
 ): MultiSelectRecyclerAdapter<TestHolderItem>(itemFlow) {
 
     override val selectionId = "selectionId"
@@ -29,9 +30,7 @@ class MultiSelectTestAdapter(
     override fun onBindViewHolder(holder:BaseRecyclerViewHolder<TestHolderItem>, position: Int) {
         super.onBindViewHolder(holder, position)
         holder.itemView.run{
-            setOnClickListener {
-                updateToSelection(position)
-            }
+
         }
     }
 
@@ -45,4 +44,11 @@ class MultiSelectTestAdapter(
             holder.itemView.setBackgroundColor(0)
         }
     }
+
+
+    override fun observerCallback() {
+        super.observerCallback()
+        callback(selectionTracker.hasSelection())
+    }
+
 }

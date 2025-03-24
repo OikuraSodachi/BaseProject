@@ -14,24 +14,18 @@ import kotlinx.coroutines.flow.Flow
  * key:Long == position:Int .toLong()
  *
  * position:Int == key:Long .toInt()
- * @param itemFlow [Flow] of recyclerview items
- * **/
+ * @param itemFlow [Flow] of recyclerview items **/
 abstract class MultiSelectRecyclerAdapter<E:Any>(
     itemFlow: Flow<List<E>>
 ): BaseRecyclerAdapter<E>(itemFlow) {
     lateinit var selectionTracker: SelectionTracker<Long>
     abstract val selectionId:String
 
-    /** selection 기능 활성화 여부 **/
-    private var selectionEnabledInstance = false
-    var isSelectionEnabled : Boolean
-        get() = selectionEnabledInstance
-        set(enabled) {
-            if(!enabled){
-                selectionTracker.clearSelection()
-            }
-            selectionEnabledInstance = enabled
+    fun disableSelection(){
+        if(selectionTracker.hasSelection()) {
+            selectionTracker.clearSelection()
         }
+    }
 
     @CallSuper
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -73,9 +67,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
     }
 
     /** additional SelectionObserver callback (optional) **/
-    open fun observerCallback(){
-
-    }
+    open fun observerCallback(){}
 
     abstract fun onSelectionChanged(holder: RecyclerView.ViewHolder, isSelected:Boolean)
 
@@ -85,18 +77,6 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
             itemList[it.toInt()]
         }.toSet()
         return out
-    }
-
-    /** select / deSelect Item **/
-    fun updateToSelection(position: Int){
-        if(isSelectionEnabled) {
-            val itemId = getItemId(position)
-            if (selectionTracker.selection.contains(itemId)) {
-                selectionTracker.deselect(itemId)
-            } else {
-                selectionTracker.select(itemId)
-            }
-        }
     }
 
     /** workaround fix for selection being cleared on touching outside

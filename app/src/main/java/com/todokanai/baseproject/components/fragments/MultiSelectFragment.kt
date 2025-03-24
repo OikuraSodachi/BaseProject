@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.todokanai.baseproject.adapters.MultiSelectTestAdapter
-import com.todokanai.baseproject.adapters.TestRecyclerAdapter
 import com.todokanai.baseproject.databinding.FragmentMultiSelectBinding
 import com.todokanai.baseproject.viewmodel.MultiSelectViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,15 +26,20 @@ class MultiSelectFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-
+        /*
         val testAdapter = TestRecyclerAdapter(
             viewModel.itemFlow,
             {viewModel.onItemClick(it)},
             {viewModel.onItemLongClick(it)},
         )
 
+         */
+        fun testCallback(selectionEnabled:Boolean){
+            binding.testButton.visibility = if(selectionEnabled) View.VISIBLE else View.GONE
+        }
         val multiTestAdapter = MultiSelectTestAdapter(
-            viewModel.itemFlow
+            viewModel.itemFlow,
+            {testCallback(it)}
         ).apply {
             setHasStableIds(true)
         }
@@ -56,7 +61,16 @@ class MultiSelectFragment : Fragment() {
                     }
                 }
             }
+            testButton.setOnClickListener {
+                val temp = multiTestAdapter.selectedItems()
+                println("size: ${temp.size}")
+                println("selection: ${temp.map{it.stringData}}")
+            }
         }
+        requireActivity().onBackPressedDispatcher.addCallback {
+            multiTestAdapter.disableSelection()
+        }
+
         return binding.root
     }
 }
