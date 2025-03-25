@@ -18,14 +18,15 @@ abstract class BaseRecyclerAdapter<E:Any,VH:BaseRecyclerViewHolder<E>>(
     private val itemLiveData = itemFlow.asLiveData()
     var itemList = emptyList<E>()
     private val observer = Observer<List<E>>{
-        notifyDataSetRefreshed()
+        val oldList = itemList
+        itemList = it
+        notifyDataSetRefreshed(oldList,it)
     }
 
     @CallSuper
-     /** [notifyDataSetChanged] 의 최적화 버전 (?) **/
-    open fun notifyDataSetRefreshed(newList:List<E> = itemList){
-        val diffResult = DiffUtil.calculateDiff(BaseRecyclerDiffUtil(itemList, newList))
-        itemList = newList
+    /** [notifyDataSetChanged] 의 최적화 버전 (?) **/
+    open fun notifyDataSetRefreshed(oldList:List<E>,newList:List<E> = itemList){
+        val diffResult = DiffUtil.calculateDiff(BaseRecyclerDiffUtil(oldList, newList))
         diffResult.dispatchUpdatesTo(this)
     }   // oldList 와 newList 를 비교해서 dataSetChanged 적용
 

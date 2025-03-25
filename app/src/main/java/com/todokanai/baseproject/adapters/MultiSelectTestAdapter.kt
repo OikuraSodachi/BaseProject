@@ -26,10 +26,6 @@ class MultiSelectTestAdapter(
         return TestHolder(view)
     }
 
-    override fun onBindViewHolder(holder: TestHolder, position: Int){
-        super.onBindViewHolder(holder, position)
-    }
-
     override fun onSelectionChanged(
         holder: RecyclerView.ViewHolder,
         isSelected: Boolean
