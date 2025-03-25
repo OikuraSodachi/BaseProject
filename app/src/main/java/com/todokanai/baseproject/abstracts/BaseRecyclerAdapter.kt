@@ -28,7 +28,7 @@ abstract class BaseRecyclerAdapter<E:Any,VH:RecyclerView.ViewHolder>(
     open fun notifyDataSetRefreshed(oldList:List<E>,newList:List<E> = itemList){
         val diffResult = DiffUtil.calculateDiff(BaseRecyclerDiffUtil(oldList, newList))
         diffResult.dispatchUpdatesTo(this)
-    }   // oldList 와 newList 를 비교해서 dataSetChanged 적용
+    }    // oldList 와 newList 를 비교해서 dataSetChanged 적용
 
     @CallSuper
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
