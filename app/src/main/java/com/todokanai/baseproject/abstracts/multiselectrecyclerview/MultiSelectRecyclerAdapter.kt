@@ -64,7 +64,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any,VH:RecyclerView.ViewHolder>(
     /** returns the [Set] of selected Items **/
     fun selectedItems(): Set<E>{
         val out = selectionTracker.selection.map{
-            itemList[it.toInt()]
+            itemList()[it.toInt()]
         }.toSet()
         return out
     }
