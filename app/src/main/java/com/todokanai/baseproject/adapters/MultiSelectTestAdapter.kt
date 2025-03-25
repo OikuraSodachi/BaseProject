@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.todokanai.baseproject.R
-import com.todokanai.baseproject.abstracts.BaseRecyclerViewHolder
 import com.todokanai.baseproject.abstracts.multiselectrecyclerview.MultiSelectRecyclerAdapter
 import com.todokanai.baseproject.data.dataclass.TestHolderItem
 import com.todokanai.baseproject.holders.TestHolder
@@ -15,21 +14,20 @@ import kotlinx.coroutines.flow.Flow
 class MultiSelectTestAdapter(
     itemFlow: Flow<List<TestHolderItem>>,
     val callback:(selectionEnabled:Boolean)->Unit
-): MultiSelectRecyclerAdapter<TestHolderItem>(itemFlow) {
+): MultiSelectRecyclerAdapter<TestHolderItem,TestHolder>(itemFlow) {
 
     override val selectionId = "selectionId"
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseRecyclerViewHolder<TestHolderItem> {
+    ): TestHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.test_recycler,parent,false)
         return TestHolder(view)
     }
 
-    override fun onBindViewHolder(holder:BaseRecyclerViewHolder<TestHolderItem>, position: Int) {
+    override fun onBindViewHolder(holder: TestHolder, position: Int){
         super.onBindViewHolder(holder, position)
-
     }
 
     override fun onSelectionChanged(

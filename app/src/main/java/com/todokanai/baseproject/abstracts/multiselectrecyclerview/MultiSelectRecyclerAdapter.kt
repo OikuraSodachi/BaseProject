@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.Flow
  *
  * position:Int == key:Long .toInt()
  * @param itemFlow [Flow] of recyclerview items **/
-abstract class MultiSelectRecyclerAdapter<E:Any>(
+abstract class MultiSelectRecyclerAdapter<E:Any,VH:BaseRecyclerViewHolder<E>>(
     itemFlow: Flow<List<E>>
-): BaseRecyclerAdapter<E>(itemFlow) {
+): BaseRecyclerAdapter<E,VH>(itemFlow) {
     lateinit var selectionTracker: SelectionTracker<Long>
     abstract val selectionId:String
 
@@ -55,7 +55,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any>(
     }
 
     @CallSuper
-    override fun onBindViewHolder(holder: BaseRecyclerViewHolder<E>, position: Int) {
+    override fun onBindViewHolder(holder: VH, position: Int) {
         holder.onInit(itemList[position])
         onSelectionChanged(holder,isSelected(position))   //holder의 selected 여부 변경시 처리
     }

@@ -11,19 +11,19 @@ import kotlinx.coroutines.flow.Flow
  *
  * Automatically handles recyclerView Item update
  *  @param itemFlow [Flow] of itemList **/
-abstract class BaseRecyclerAdapter<E:Any>(
+abstract class BaseRecyclerAdapter<E:Any,VH:BaseRecyclerViewHolder<E>>(
     itemFlow: Flow<List<E>>,
-): RecyclerView.Adapter<BaseRecyclerViewHolder<E>>() {
+): RecyclerView.Adapter<VH>() {
 
     private val itemLiveData = itemFlow.asLiveData()
     var itemList = emptyList<E>()
     private val observer = Observer<List<E>>{
-        itemList = it
-        refreshItemList(it)
+        notifyDataSetRefreshed()
     }
 
+    @CallSuper
      /** [notifyDataSetChanged] 의 최적화 버전 (?) **/
-    fun refreshItemList(newList:List<E>){
+    open fun notifyDataSetRefreshed(newList:List<E> = itemList){
         val diffResult = DiffUtil.calculateDiff(BaseRecyclerDiffUtil(itemList, newList))
         itemList = newList
         diffResult.dispatchUpdatesTo(this)
