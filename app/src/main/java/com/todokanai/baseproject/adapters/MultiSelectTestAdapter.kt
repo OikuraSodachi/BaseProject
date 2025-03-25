@@ -3,7 +3,6 @@ package com.todokanai.baseproject.adapters
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.todokanai.baseproject.R
 import com.todokanai.baseproject.abstracts.multiselectrecyclerview.MultiSelectRecyclerAdapter
 import com.todokanai.baseproject.data.dataclass.TestHolderItem
@@ -26,10 +25,9 @@ class MultiSelectTestAdapter(
         return TestHolder(view)
     }
 
-    override fun onSelectionChanged(
-        holder: RecyclerView.ViewHolder,
-        isSelected: Boolean
-    ){
+    override fun onBindViewHolder(holder: TestHolder, position: Int) {
+        holder.onInit(itemList[position])
+        val isSelected = selectionTracker.selection.contains(position.toLong())
         if(isSelected){
             holder.itemView.setBackgroundColor(Color.GRAY)
         } else{
