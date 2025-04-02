@@ -7,13 +7,11 @@ import com.todokanai.baseproject.R
 import com.todokanai.baseproject.abstracts.multiselectrecyclerview.MultiSelectRecyclerAdapter
 import com.todokanai.baseproject.data.dataclass.TestHolderItem
 import com.todokanai.baseproject.holders.TestHolder
-import kotlinx.coroutines.flow.Flow
 
 /** example of [MultiSelectRecyclerAdapter] instance **/
 class MultiSelectTestAdapter(
-    itemFlow: Flow<List<TestHolderItem>>,
     val callback:(selectionEnabled:Boolean)->Unit
-): MultiSelectRecyclerAdapter<TestHolderItem,TestHolder>(itemFlow) {
+): MultiSelectRecyclerAdapter<TestHolderItem,TestHolder>() {
 
     override val selectionId = "selectionId"
 
@@ -26,7 +24,7 @@ class MultiSelectTestAdapter(
     }
 
     override fun onBindViewHolder(holder: TestHolder, position: Int) {
-        holder.onInit(itemList[position])
+        holder.onInit(itemList()[position])
         val isSelected = selectionTracker.selection.contains(position.toLong())
         if(isSelected){
             holder.itemView.setBackgroundColor(Color.GRAY)

@@ -25,20 +25,12 @@ class MultiSelectFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        /*
-        val testAdapter = TestRecyclerAdapter(
-            viewModel.itemFlow,
-            {viewModel.onItemClick(it)},
-            {viewModel.onItemLongClick(it)},
-        )
+    ): View {
 
-         */
         fun testCallback(selectionEnabled:Boolean){
             binding.testButton.visibility = if(selectionEnabled) View.VISIBLE else View.GONE
         }
         val multiTestAdapter = MultiSelectTestAdapter(
-            viewModel.itemFlow,
             {testCallback(it)}
         ).apply {
             setHasStableIds(true)
@@ -69,6 +61,10 @@ class MultiSelectFragment : Fragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback {
             multiTestAdapter.disableSelection()
+        }
+
+        viewModel.itemFlow.asLiveData().observe(viewLifecycleOwner){
+            multiTestAdapter.updateDataSet(it)
         }
 
         return binding.root
