@@ -64,7 +64,7 @@ class MultiSelectFragment : Fragment() {
         }
 
         viewModel.itemFlow.asLiveData().observe(viewLifecycleOwner){
-            multiTestAdapter.updateDataSet(it)
+            multiTestAdapter.submitList(it)
         }
 
         return binding.root

@@ -4,15 +4,18 @@ import android.view.MotionEvent
 import androidx.annotation.CallSuper
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.todokanai.baseproject.abstracts.BaseRecyclerAdapter
 
-/** [BaseRecyclerAdapter] with multi-selection feature
+/**
  *
  * key:Long == position:Int .toLong()
  *
  * position:Int == key:Long .toInt() **/
-abstract class MultiSelectRecyclerAdapter<E:Any,VH:RecyclerView.ViewHolder>(): BaseRecyclerAdapter<E,VH>() {
+abstract class MultiSelectRecyclerAdapter<E:Any,VH:RecyclerView.ViewHolder>(
+    diffCallback: DiffUtil.ItemCallback<E>
+): ListAdapter<E, VH>(diffCallback) {
     lateinit var selectionTracker: SelectionTracker<Long>
     abstract val selectionId:String
 
@@ -60,7 +63,7 @@ abstract class MultiSelectRecyclerAdapter<E:Any,VH:RecyclerView.ViewHolder>(): B
     /** returns the [Set] of selected Items **/
     fun selectedItems(): Set<E>{
         val out = selectionTracker.selection.map{
-            itemList()[it.toInt()]
+            getItem(it.toInt())
         }.toSet()
         return out
     }

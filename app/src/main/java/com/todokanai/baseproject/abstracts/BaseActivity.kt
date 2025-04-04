@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-/**
- * handles permissions
- * **/
+/** handles permissions **/
 abstract class BaseActivity: AppCompatActivity() {
 
     abstract val permissions:Array<String>
