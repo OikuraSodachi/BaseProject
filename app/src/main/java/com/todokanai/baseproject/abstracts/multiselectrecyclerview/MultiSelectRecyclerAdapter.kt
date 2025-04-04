@@ -8,22 +8,30 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-/**
+/** RecyclerAdapter with multi-selection feature
  *
  * key:Long == position:Int .toLong()
  *
- * position:Int == key:Long .toInt() **/
+ * position:Int == key:Long .toInt()
+ *
+ * selectionTracker.hasSelection() -> return false if selection is a empty list **/
 abstract class MultiSelectRecyclerAdapter<E:Any,VH:RecyclerView.ViewHolder>(
-    diffCallback: DiffUtil.ItemCallback<E>
-): ListAdapter<E, VH>(diffCallback) {
+    diffUtil:DiffUtil.ItemCallback<E>
+): ListAdapter<E, VH>(diffUtil) {
     lateinit var selectionTracker: SelectionTracker<Long>
     abstract val selectionId:String
 
-    fun disableSelection(){
-        if(selectionTracker.hasSelection()) {
-            selectionTracker.clearSelection()
-        }
+    /** @return set of selected items **/
+    fun selectedItems():Set<E>{
+        return selectionTracker.selection.map {
+            currentList[it.toInt()]
+        }.toSet()
     }
+
+    /** called when a change occurs in the selection
+     *
+     * view 의 갱신 처리 등 작업은 여기서 하는 게 맞는 듯? **/
+    abstract fun onSelectionChanged(index:Int,item:E)
 
     @CallSuper
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -43,29 +51,19 @@ abstract class MultiSelectRecyclerAdapter<E:Any,VH:RecyclerView.ViewHolder>(
 
         selectionTracker.addObserver(
             BaseSelectionObserver(
-                callback = { observerCallback() }
+                callback = {
+                    currentList.run{
+                        forEachIndexed { index, item ->
+                            onSelectionChanged(index,item)
+                        }
+                    }
+                }
             )
         )
     }
 
     override fun getItemId(position: Int):Long{
         return position.toLong()
-    }
-
-    /** whether item( itemList[position] ) is selected **/
-    fun isSelected(position:Int):Boolean{
-        return selectionTracker.selection.contains(position.toLong())
-    }
-
-    /** additional SelectionObserver callback (optional) **/
-    open fun observerCallback(){}
-
-    /** returns the [Set] of selected Items **/
-    fun selectedItems(): Set<E>{
-        val out = selectionTracker.selection.map{
-            getItem(it.toInt())
-        }.toSet()
-        return out
     }
 
     /** workaround fix for selection being cleared on touching outside

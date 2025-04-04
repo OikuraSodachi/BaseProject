@@ -60,7 +60,7 @@ class MultiSelectFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback {
-            multiTestAdapter.disableSelection()
+            multiTestAdapter.selectionTracker.clearSelection()
         }
 
         viewModel.itemFlow.asLiveData().observe(viewLifecycleOwner){

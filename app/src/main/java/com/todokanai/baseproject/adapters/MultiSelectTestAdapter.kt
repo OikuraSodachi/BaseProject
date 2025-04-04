@@ -24,6 +24,9 @@ class MultiSelectTestAdapter(
 ) {
 
     override val selectionId = "selectionId"
+    override fun onSelectionChanged(index: Int, item: TestHolderItem) {
+        callback(selectionTracker.hasSelection())
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -42,11 +45,5 @@ class MultiSelectTestAdapter(
             holder.itemView.setBackgroundColor(0)
         }
     }
-
-    override fun observerCallback() {
-        super.observerCallback()
-        callback(selectionTracker.hasSelection())
-    }
-
 
 }
