@@ -11,7 +11,7 @@ import com.todokanai.baseproject.holders.TestHolder
 
 /** example of [MultiSelectRecyclerAdapter] instance **/
 class MultiSelectTestAdapter(
-    val callback:(selectionEnabled:Boolean)->Unit
+    private val onSelectionEnabled:(enabled:Boolean)->Unit
 ): MultiSelectRecyclerAdapter<TestHolderItem,TestHolder>(
     object: DiffUtil.ItemCallback<TestHolderItem>(){
         override fun areItemsTheSame(oldItem: TestHolderItem, newItem: TestHolderItem): Boolean {
@@ -24,8 +24,10 @@ class MultiSelectTestAdapter(
 ) {
 
     override val selectionId = "selectionId"
-    override fun onSelectionChanged(index: Int, item: TestHolderItem) {
-        callback(selectionTracker.hasSelection())
+
+    override fun onSelectionModeEnabled(enabled: Boolean) {
+        super.onSelectionModeEnabled(enabled)
+        onSelectionEnabled(enabled)
     }
 
     override fun onCreateViewHolder(
@@ -38,7 +40,7 @@ class MultiSelectTestAdapter(
 
     override fun onBindViewHolder(holder: TestHolder, position: Int) {
         holder.onInit(getItem(position))
-        val isSelected = selectionTracker.selection.contains(position.toLong())
+        val isSelected = selectedItemKeys().contains(position.toLong())
         if(isSelected){
             holder.itemView.setBackgroundColor(Color.GRAY)
         } else{

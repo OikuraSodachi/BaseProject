@@ -31,7 +31,8 @@ class MultiSelectFragment : Fragment() {
             binding.testButton.visibility = if(selectionEnabled) View.VISIBLE else View.GONE
         }
         val multiTestAdapter = MultiSelectTestAdapter(
-            {testCallback(it)}
+            onSelectionEnabled = {testCallback(it)}
+           // callback = {testCallback(it)}
         ).apply {
             setHasStableIds(true)
         }
@@ -54,13 +55,13 @@ class MultiSelectFragment : Fragment() {
                 }
             }
             testButton.setOnClickListener {
-                val temp = multiTestAdapter.selectedItems()
-                println("size: ${temp.size}")
-                println("selection: ${temp.map{it.stringData}}")
+               // val temp = multiTestAdapter.selectedItems()
+               // println("size: ${temp.size}")
+               // println("selection: ${temp.map{it.stringData}}")
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback {
-            multiTestAdapter.selectionTracker.clearSelection()
+            multiTestAdapter.onSelectionModeEnabled(false)
         }
 
         viewModel.itemFlow.asLiveData().observe(viewLifecycleOwner){

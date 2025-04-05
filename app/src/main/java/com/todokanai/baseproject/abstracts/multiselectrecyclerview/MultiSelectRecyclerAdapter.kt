@@ -18,20 +18,28 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class MultiSelectRecyclerAdapter<E:Any,VH:RecyclerView.ViewHolder>(
     diffUtil:DiffUtil.ItemCallback<E>
 ): ListAdapter<E, VH>(diffUtil) {
-    lateinit var selectionTracker: SelectionTracker<Long>
+    private lateinit var selectionTracker: SelectionTracker<Long>
     abstract val selectionId:String
+
+    /** callback for when selection is enabled/disabled **/
+    @CallSuper
+    open fun onSelectionModeEnabled(enabled:Boolean){
+        if(!enabled) {
+            selectionTracker.clearSelection()
+        }
+        println("onSelectionModeEnabled: $enabled")
+    }
+
+    fun selectedItemKeys():Set<Long>{
+        return selectionTracker.selection.toSet()
+    }
 
     /** @return set of selected items **/
     fun selectedItems():Set<E>{
-        return selectionTracker.selection.map {
+        return selectedItemKeys().map {
             currentList[it.toInt()]
         }.toSet()
     }
-
-    /** called when a change occurs in the selection
-     *
-     * view 의 갱신 처리 등 작업은 여기서 하는 게 맞는 듯? **/
-    abstract fun onSelectionChanged(index:Int,item:E)
 
     @CallSuper
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -52,11 +60,9 @@ abstract class MultiSelectRecyclerAdapter<E:Any,VH:RecyclerView.ViewHolder>(
         selectionTracker.addObserver(
             BaseSelectionObserver(
                 callback = {
-                    currentList.run{
-                        forEachIndexed { index, item ->
-                            onSelectionChanged(index,item)
-                        }
-                    }
+                    onSelectionModeEnabled(
+                        selectionTracker.hasSelection()
+                    )
                 }
             )
         )
