@@ -3,8 +3,8 @@ package com.todokanai.baseproject.components.activity
 import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.todokanai.baseproject.R
-import com.todokanai.baseproject.abstracts.BaseActivity
 import com.todokanai.baseproject.adapters.TestViewPager
 import com.todokanai.baseproject.components.fragments.MultiSelectFragment
 import com.todokanai.baseproject.components.fragments.TestFragment
@@ -15,17 +15,18 @@ import com.todokanai.baseproject.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity() {
-    override val permissions = Objects.permissions
-    override val requestCode = PERMISSION_REQUEST_CODE
+class MainActivity : AppCompatActivity() {
+    val permissions = Objects.permissions
+    val requestCode = PERMISSION_REQUEST_CODE
 
     private val binding by lazy{ActivityMainBinding.inflate(layoutInflater)}
     private val viewModel : MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-
+        if(permissions.isNotEmpty()){
+            requestPermissions(permissions,requestCode)
+        }
     //    val composeViewVisibility = mutableStateOf(false)
         val fragList = listOf(MultiSelectFragment(),TestFragment())
         val textList = listOf(getString(R.string.frag1),getString(R.string.frag2))
@@ -61,5 +62,7 @@ class MainActivity : BaseActivity() {
         onBackPressedDispatcher.addCallback {
 
         }
+        setContentView(binding.root)
+
     }
 }
